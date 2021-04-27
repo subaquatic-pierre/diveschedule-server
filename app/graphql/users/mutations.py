@@ -20,6 +20,8 @@ class CreateUser(graphene.Mutation):
         certification_level = graphene.String(required=False)
         equipment = graphene.String(required=False)
         full_name = graphene.String(required=False)
+        is_superuser = graphene.Boolean(required=False)
+        is_staff = graphene.Boolean(required=False)
 
     # @staff_member_required
     def mutate(self, info, *args, **kwargs):
@@ -30,11 +32,15 @@ class CreateUser(graphene.Mutation):
         full_name = kwargs.get("full_name", "default")
         equipment = kwargs.get("equipment", "default")
         certification_level = kwargs.get("certification_level", "default")
+        is_superuser = kwargs.get("is_superuser", False)
+        is_staff = kwargs.get("is_staff", False)
 
         user = User(
             email=email,
         )
         user.set_password(password)
+        user.is_superuser = is_superuser
+        user.is_staff = is_staff
 
         profile = Profile(user=user)
         profile.full_name = full_name

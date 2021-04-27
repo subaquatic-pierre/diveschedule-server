@@ -1,12 +1,14 @@
 import os
+from pathlib import Path
 from datetime import timedelta
 from .config import Config
 
 config = Config()
 
-PROJECT_ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__), ".."))
-
+BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config.SECRET_KEY
+DEBUG = config.DEBUG
+APPEND_SLASH = False
 
 # Base Settings
 WSGI_APPLICATION = "app.wsgi.application"
@@ -79,7 +81,6 @@ GRAPHENE = {
 
 GRAPHQL_JWT = {
     "JWT_VERIFY_EXPIRATION": False,
-    "JWT_EXPIRATION_DELTA": False,
     "JWT_REFRESH_EXPIRATION_DELTA": timedelta(days=7),
 }
 
@@ -99,8 +100,6 @@ TEMPLATES = [
     },
 ]
 
-APPEND_SLASH = False
-
 # INTERNATIONALIZATION
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
@@ -109,51 +108,69 @@ USE_L10N = True
 USE_TZ = True
 
 # STATIC FILES
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, "media")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = os.environ.get("MEDIA_URL", "/media/")
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = os.environ.get("STATIC_URL", "/static/")
 
 # Check produciton or development environment
-if config.DATABASE == "AWS":
-    ALLOWED_HOSTS = [".divesandybeach.com"]
-    DEBUG = False
+if DEBUG:
+    # CORS settings
+    ALLOWED_HOSTS = ["*"]
+    CSRF_TRUSTED_ORIGINS = ["*"]
+    CORS_ALLOW_ALL_ORIGINS = True
+
+    # Databse settings
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": config.NAME,
-            "USER": config.USER,
-            "PASSWORD": config.PASSWORD,
-            "HOST": config.HOST,
-            "PORT": config.PORT,
+            "NAME": config.DB_NAME,
+            "USER": config.DB_USER,
+            "PASSWORD": config.DB_PASSWORD,
+            "HOST": config.DB_HOST,
+            "PORT": config.DB_PORT,
+        }
+    }
+    # DATABASES = {
+    #     "default": {
+    #         "ENGINE": "django.db.backends.sqlite3",
+    #         "NAME": os.path.join(BASE_DIR, "db.sqlite"),
+    #     }
+    # }
+
+else:
+    # CORS settings
+    CORS_ALLOW_ALL_ORIGINS = True
+    CSRF_TRUSTED_ORIGINS = config.CSRF_TRUSTED_ORIGINS
+    ALLOWED_HOSTS = config.ALLOWED_HOSTS
+
+    # Database settings
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": config.DB_NAME,
+            "USER": config.DB_USER,
+            "PASSWORD": config.DB_PASSWORD,
+            "HOST": config.DB_HOST,
+            "PORT": config.DB_PORT,
         }
     }
 
     AUTH_PASSWORD_VALIDATORS = [
         {
-            "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+            "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
         },
-        {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
-        {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
-        {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+        {
+            "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        },
+        {
+            "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+        },
+        {
+            "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+        },
     ]
-
-# development environment
-else:
-    ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
-    DEBUG = True
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": os.path.join(PROJECT_ROOT, "db.sqlite"),
-        }
-    }
-
-    # Cors Header Settings
-    CORS_ALLOW_CREDENTIALS = True
-    CORS_ORIGIN_ALLOW_ALL = True
-    CSRF_COOKIE_NAME = "csrftoken"
 
 # ---------------------- HIDE ALL BELOW FOR SECURITY ----------------------
 
@@ -173,8 +190,3 @@ else:
 #         }
 #     }
 # }
-
-# TODO:
-# Setup email backend for forgotten password
-# Add react-helmet to front end
-# Use django-all-auth
