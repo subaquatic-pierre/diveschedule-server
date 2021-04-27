@@ -1,0 +1,57 @@
+[
+  {
+    "model": "schedule.day",
+    "pk": 1,
+    "fields": {
+      "date": "2021-03-30"
+    }
+  },
+  {
+    "model": "schedule.tripdetail",
+    "pk": 1,
+    "fields": {
+      "day": 1,
+      "time": "9AM",
+      "trip_type": "AM_BOAT",
+      "dive_site_1": "Inchcape 1",
+      "dive_site_2": "Snoopy Deep",
+      "dive_guides": [4, 5]
+    }
+  },
+  {
+    "model": "schedule.tripdetail",
+    "pk": 2,
+    "fields": {
+      "day": 1,
+      "time": "1:30PM",
+      "trip_type": "PM_BOAT",
+      "dive_site_1": "Dibba Rock",
+      "dive_site_2": "3 Rocks",
+      "dive_guides": [5, 6]
+    }
+  },
+  {
+    "model": "schedule.tripdetail",
+    "pk": 3,
+    "fields": {
+      "day": 1,
+      "trip_type": "POOL"
+    }
+  },
+  {
+    "model": "schedule.tripdetail",
+    "pk": 4,
+    "fields": {
+      "day": 1,
+      "trip_type": "SHORE"
+    }
+  },
+  {
+    "model": "schedule.tripdetail",
+    "pk": 5,
+    "fields": {
+      "day": 1,
+      "trip_type": "CLASS"
+    }
+  }
+]

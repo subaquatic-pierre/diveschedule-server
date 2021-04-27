@@ -1,0 +1,185 @@
+schema {
+  query: RootQuery
+  mutation: RootMutation
+}
+
+enum BookingBookingStatus {
+  REQUESTED
+  COMPLETED
+  PENDING_CHANGE
+  CANCELLED
+}
+
+enum BookingtripType {
+  AM_BOAT
+  PM_BOAT
+  POOL
+  SHORE
+  CLASS
+}
+
+enum BookingTime {
+  A_9AM
+  A_10AM
+  A_1_30PM
+  A_2PM
+}
+
+type tripType {
+  id: ID!
+  initiatedDate: Date!
+  date: Date!
+  time: BookingTime!
+  tripType: BookingtripType!
+  diver: UserType!
+  bookedBy: UserType!
+  activity: String!
+  equipment: String!
+  bookingStatus: BookingBookingStatus
+  cancellationReason: String
+}
+
+type CreateBooking {
+  booking: tripType
+}
+
+type CreateUser {
+  user: UserType
+}
+
+scalar Date
+
+scalar DateTime
+
+type DeleteBooking {
+  deleted: Boolean
+}
+
+type DeleteJSONWebTokenCookie {
+  deleted: Boolean!
+}
+
+type DeleteUser {
+  deleted: Boolean
+}
+
+type EditBooking {
+  booking: tripType
+}
+
+type EditProfile {
+  profile: ProfileType
+}
+
+type EditUser {
+  user: UserType
+}
+
+scalar GenericScalar
+
+type ObtainJSONWebToken {
+  payload: GenericScalar!
+  refreshExpiresIn: Int!
+  token: String!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type ProfileType {
+  id: ID!
+  user: UserType!
+  certificationLevel: String
+  fullName: String
+}
+
+type Refresh {
+  payload: GenericScalar!
+  refreshExpiresIn: Int!
+  token: String!
+}
+
+type Revoke {
+  revoked: Int!
+}
+
+type RootMutation {
+  editProfile(email: String!, password: String!): EditProfile
+  createBooking(
+    activity: String!
+    tripType: String!
+    date: Date!
+    diverUsername: String!
+    equipment: String!
+    time: String!
+  ): CreateBooking
+  editBooking(
+    activity: String
+    tripType: String
+    date: Date
+    diverUsername: String
+    equipment: String
+    id: ID!
+    time: String
+  ): EditBooking
+  deleteBooking(id: ID!): DeleteBooking
+  deleteTokenCookie: DeleteJSONWebTokenCookie
+  createUser(email: String!, password: String!): CreateUser
+  editUser(email: String, id: ID!, password: String): EditUser
+  deleteUser(id: ID!): DeleteUser
+  tokenAuth(username: String!, password: String!): ObtainJSONWebToken
+  verifyToken(token: String): Verify
+  refreshToken(token: String): Refresh
+  revokeToken(refreshToken: String): Revoke
+}
+
+type RootQuery {
+  booking(id: ID): tripType
+  bookings(date: String!): [tripType]
+  user(id: ID): UserType
+  users(
+    ids: [ID]
+    before: String
+    after: String
+    first: Int
+    last: Int
+  ): UserConnection
+  allUsers(before: String, after: String, first: Int, last: Int): UserConnection
+  viewer: UserType
+  profile(username: String): ProfileType
+}
+
+type UserConnection {
+  pageInfo: PageInfo!
+  edges: [UserEdge]!
+}
+
+type UserEdge {
+  node: UserType
+  cursor: String!
+}
+
+type UserType {
+  id: ID!
+  password: String!
+  lastLogin: DateTime
+  isSuperuser: Boolean!
+  username: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+  isStaff: Boolean!
+  isActive: Boolean!
+  dateJoined: DateTime!
+  diverBooking: [tripType!]!
+  bookedByBooking: [tripType!]!
+  profile: ProfileType
+}
+
+type Verify {
+  payload: GenericScalar!
+}

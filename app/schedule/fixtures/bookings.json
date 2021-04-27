@@ -1,0 +1,288 @@
+[
+  {
+    "model": "schedule.booking",
+    "pk": 1,
+    "fields": {
+      "initiated_date": "2021-03-30",
+      "trip_detail": 1,
+      "diver": 4,
+      "booked_by": 4,
+      "activity": "PD",
+      "equipment": "FK",
+      "booking_status": "REQUESTED",
+      "cancellation_reason": null
+    }
+  },
+  {
+    "model": "schedule.booking",
+    "pk": 2,
+    "fields": {
+      "initiated_date": "2021-03-30",
+      "trip_detail": 1,
+      "diver": 5,
+      "booked_by": 4,
+      "activity": "PD",
+      "equipment": "FK",
+      "booking_status": "REQUESTED",
+      "cancellation_reason": null
+    }
+  },
+  {
+    "model": "schedule.booking",
+    "pk": 3,
+    "fields": {
+      "initiated_date": "2021-03-30",
+      "trip_detail": 1,
+      "diver": 6,
+      "booked_by": 4,
+      "activity": "PD",
+      "equipment": "TW",
+      "booking_status": "REQUESTED",
+      "cancellation_reason": null
+    }
+  },
+  {
+    "model": "schedule.booking",
+    "pk": 4,
+    "fields": {
+      "initiated_date": "2021-03-30",
+      "trip_detail": 1,
+      "diver": 7,
+      "booked_by": 4,
+      "activity": "PD",
+      "equipment": "TW",
+      "booking_status": "REQUESTED",
+      "cancellation_reason": null
+    }
+  },
+  {
+    "model": "schedule.booking",
+    "pk": 5,
+    "fields": {
+      "initiated_date": "2021-03-30",
+      "trip_detail": 1,
+      "diver": 8,
+      "booked_by": 4,
+      "activity": "OWC",
+      "equipment": "FK",
+      "booking_status": "REQUESTED",
+      "cancellation_reason": null
+    }
+  },
+  {
+    "model": "schedule.booking",
+    "pk": 6,
+    "fields": {
+      "initiated_date": "2021-03-30",
+      "trip_detail": 1,
+      "diver": 9,
+      "booked_by": 4,
+      "activity": "OWC",
+      "equipment": "FK",
+      "booking_status": "REQUESTED",
+      "cancellation_reason": null
+    }
+  },
+  {
+    "model": "schedule.booking",
+    "pk": 7,
+    "fields": {
+      "initiated_date": "2021-03-30",
+      "trip_detail": 2,
+      "diver": 10,
+      "booked_by": 10,
+      "activity": "PD",
+      "equipment": "TW",
+      "booking_status": "REQUESTED",
+      "cancellation_reason": null
+    }
+  },
+  {
+    "model": "schedule.booking",
+    "pk": 8,
+    "fields": {
+      "initiated_date": "2021-03-30",
+      "trip_detail": 2,
+      "diver": 11,
+      "booked_by": 10,
+      "activity": "PD",
+      "equipment": "TW",
+      "booking_status": "REQUESTED",
+      "cancellation_reason": null
+    }
+  },
+  {
+    "model": "schedule.booking",
+    "pk": 9,
+    "fields": {
+      "initiated_date": "2021-03-30",
+      "trip_detail": 2,
+      "diver": 12,
+      "booked_by": 10,
+      "activity": "PD",
+      "equipment": "TW",
+      "booking_status": "REQUESTED",
+      "cancellation_reason": null
+    }
+  },
+  {
+    "model": "schedule.booking",
+    "pk": 10,
+    "fields": {
+      "initiated_date": "2021-03-30",
+      "trip_detail": 2,
+      "diver": 13,
+      "booked_by": 10,
+      "activity": "PD",
+      "equipment": "TW",
+      "booking_status": "REQUESTED",
+      "cancellation_reason": null
+    }
+  },
+  {
+    "model": "schedule.booking",
+    "pk": 11,
+    "fields": {
+      "initiated_date": "2021-03-30",
+      "trip_detail": 2,
+      "diver": 14,
+      "booked_by": 10,
+      "activity": "PD",
+      "equipment": "TW",
+      "booking_status": "REQUESTED",
+      "cancellation_reason": null
+    }
+  },
+  {
+    "model": "schedule.booking",
+    "pk": 12,
+    "fields": {
+      "initiated_date": "2021-03-30",
+      "trip_detail": 2,
+      "diver": 15,
+      "booked_by": 10,
+      "activity": "PD",
+      "equipment": "TW",
+      "booking_status": "REQUESTED",
+      "cancellation_reason": null
+    }
+  },
+  {
+    "model": "schedule.booking",
+    "pk": 13,
+    "fields": {
+      "initiated_date": "2021-03-30",
+      "trip_detail": 2,
+      "diver": 16,
+      "booked_by": 10,
+      "activity": "PD",
+      "equipment": "FK",
+      "booking_status": "REQUESTED",
+      "cancellation_reason": null
+    }
+  },
+  {
+    "model": "schedule.booking",
+    "pk": 14,
+    "fields": {
+      "initiated_date": "2021-03-30",
+      "trip_detail": 2,
+      "diver": 17,
+      "booked_by": 10,
+      "activity": "PD",
+      "equipment": "FK",
+      "booking_status": "REQUESTED",
+      "cancellation_reason": null
+    }
+  },
+  {
+    "model": "schedule.booking",
+    "pk": 15,
+    "fields": {
+      "initiated_date": "2021-03-30",
+      "time": "10AM",
+      "trip_detail": 3,
+      "diver": 18,
+      "booked_by": 10,
+      "activity": "REFRESH",
+      "equipment": "FK",
+      "booking_status": "REQUESTED",
+      "cancellation_reason": null
+    }
+  },
+  {
+    "model": "schedule.booking",
+    "pk": 16,
+    "fields": {
+      "initiated_date": "2021-03-30",
+      "time": "10AM",
+      "trip_detail": 3,
+      "diver": 19,
+      "booked_by": 10,
+      "activity": "REFRESH",
+      "equipment": "FK",
+      "booking_status": "REQUESTED",
+      "cancellation_reason": null
+    }
+  },
+  {
+    "model": "schedule.booking",
+    "pk": 17,
+    "fields": {
+      "initiated_date": "2021-03-30",
+      "time": "9AM",
+      "trip_detail": 4,
+      "diver": 20,
+      "booked_by": 10,
+      "activity": "PD",
+      "equipment": "FK",
+      "booking_status": "REQUESTED",
+      "cancellation_reason": null
+    }
+  },
+  {
+    "model": "schedule.booking",
+    "pk": 18,
+    "fields": {
+      "initiated_date": "2021-03-30",
+      "time": "9AM",
+      "trip_detail": 4,
+      "diver": 21,
+      "booked_by": 10,
+      "activity": "PD",
+      "equipment": "TW",
+      "booking_status": "REQUESTED",
+      "cancellation_reason": null
+    }
+  },
+  {
+    "model": "schedule.booking",
+    "pk": 19,
+    "fields": {
+      "initiated_date": "2021-03-30",
+      "time": "2PM",
+      "trip_detail": 4,
+      "diver": 22,
+      "booked_by": 10,
+      "activity": "PD",
+      "equipment": "TW",
+      "booking_status": "REQUESTED",
+      "cancellation_reason": null
+    }
+  },
+  {
+    "model": "schedule.booking",
+    "pk": 20,
+    "fields": {
+      "initiated_date": "2021-03-30",
+      "time": "10AM",
+      "trip_detail": 5,
+      "diver": 23,
+      "booked_by": 10,
+      "activity": "RDC",
+      "equipment": "FK",
+      "booking_status": "REQUESTED",
+      "cancellation_reason": null
+    }
+  }
+]
