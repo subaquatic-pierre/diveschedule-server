@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
-from datetime import timedelta
 from .config import Config
+from datetime import timedelta
 
 config = Config()
 
@@ -10,62 +10,41 @@ SECRET_KEY = config.SECRET_KEY
 DEBUG = config.DEBUG
 APPEND_SLASH = False
 
-# Base Settings
 WSGI_APPLICATION = "app.wsgi.application"
 ROOT_URLCONF = "app.urls"
 
+
+GRAPHENE = {
+    "SCHEMA": "app.graphql.schema.schema",
+    "SCHEMA_OUTPUT": "graphql/schema.graphql",  # defaults to schema.json,
+    "SCHEMA_INDENT": 2,  # Defaults to None (displays all data on a single line)
+}
+
 # Application definition
 INSTALLED_APPS = [
-    # Default apps
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # Dango allauth
     "django.contrib.sites",
+    # AllAuth
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    # 'allauth.socialaccount.providers.facebook',
-    # 'allauth.socialaccount.providers.google',
-    # Other apps
+    "allauth.socialaccount.providers.facebook",
+    # Gjango Graphene
     "graphene_django",
-    "corsheaders",
     "django_filters",
+    "corsheaders",
     # User apps
     "app.schedule",
     "app.users",
     "app.graphql",
 ]
 
-AUTH_USER_MODEL = "users.CustomUser"
-
-# DJANGO-ALAUTH
-ACCOUNT_EMAIL_VERIFICATION = None
 SITE_ID = 1
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-LOGIN_URL = "login/"
-LOGIN_REDIRECT_URL = "/"
-
-MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
-]
-
-AUTHENTICATION_BACKENDS = [
-    "graphql_jwt.backends.JSONWebTokenBackend",
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
-]
 
 GRAPHENE = {
     "SCHEMA": "app.graphql.schema.schema",
@@ -78,11 +57,30 @@ GRAPHENE = {
     ],
 }
 
+AUTH_USER_MODEL = "users.CustomUser"
 
-GRAPHQL_JWT = {
-    "JWT_VERIFY_EXPIRATION": False,
-    "JWT_REFRESH_EXPIRATION_DELTA": timedelta(days=7),
-}
+
+LANGUAGE_CODE = "en-us"
+TIME_ZONE = "UTC"
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
+
+# Static files
+STATIC_URL = "/static/"
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "corsheaders.middleware.CorsPostCsrfMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+]
 
 TEMPLATES = [
     {
@@ -95,17 +93,24 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.request",
             ],
         },
     },
 ]
 
-# INTERNATIONALIZATION
-LANGUAGE_CODE = "en-us"
-TIME_ZONE = "UTC"
-USE_I18N = True
-USE_L10N = True
-USE_TZ = True
+
+AUTHENTICATION_BACKENDS = [
+    "graphql_jwt.backends.JSONWebTokenBackend",
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+GRAPHQL_JWT = {
+    "JWT_VERIFY_EXPIRATION": False,
+    "JWT_REFRESH_EXPIRATION_DELTA": timedelta(days=7),
+    "JWT_AUTH_HEADER_NAME": "Authorization",
+}
 
 # STATIC FILES
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -114,14 +119,15 @@ MEDIA_URL = os.environ.get("MEDIA_URL", "/media/")
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = os.environ.get("STATIC_URL", "/static/")
 
-# Check produciton or development environment
+
+# Check if production or development environment
 if DEBUG:
     # CORS settings
     ALLOWED_HOSTS = ["*"]
     CSRF_TRUSTED_ORIGINS = ["*"]
     CORS_ALLOW_ALL_ORIGINS = True
 
-    # Databse settings
+    # Database settings
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
@@ -132,10 +138,12 @@ if DEBUG:
             "PORT": config.DB_PORT,
         }
     }
+
+    # # Databse settings
     # DATABASES = {
     #     "default": {
     #         "ENGINE": "django.db.backends.sqlite3",
-    #         "NAME": os.path.join(BASE_DIR, "db.sqlite"),
+    #         "NAME": BASE_DIR / "db.sqlite",
     #     }
     # }
 

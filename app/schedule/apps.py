@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class scheduleConfig(AppConfig):
-    name = "schedule"
+    name = "app.schedule"
