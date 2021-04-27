@@ -13,13 +13,6 @@ APPEND_SLASH = False
 WSGI_APPLICATION = "app.wsgi.application"
 ROOT_URLCONF = "app.urls"
 
-
-GRAPHENE = {
-    "SCHEMA": "app.graphql.schema.schema",
-    "SCHEMA_OUTPUT": "graphql/schema.graphql",  # defaults to schema.json,
-    "SCHEMA_INDENT": 2,  # Defaults to None (displays all data on a single line)
-}
-
 # Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -33,7 +26,7 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    "allauth.socialaccount.providers.facebook",
+    # "allauth.socialaccount.providers.facebook",
     # Gjango Graphene
     "graphene_django",
     "django_filters",
@@ -44,7 +37,20 @@ INSTALLED_APPS = [
     "app.graphql",
 ]
 
+AUTH_USER_MODEL = "users.CustomUser"
 SITE_ID = 1
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+
+LANGUAGE_CODE = "en-us"
+TIME_ZONE = "UTC"
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
+
+# Static files
+STATIC_URL = "/static/"
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 GRAPHENE = {
     "SCHEMA": "app.graphql.schema.schema",
@@ -56,19 +62,6 @@ GRAPHENE = {
         "graphql_jwt.middleware.JSONWebTokenMiddleware",
     ],
 }
-
-AUTH_USER_MODEL = "users.CustomUser"
-
-
-LANGUAGE_CODE = "en-us"
-TIME_ZONE = "UTC"
-USE_I18N = True
-USE_L10N = True
-USE_TZ = True
-
-# Static files
-STATIC_URL = "/static/"
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -99,18 +92,14 @@ TEMPLATES = [
     },
 ]
 
+GRAPHQL_JWT = {
+    "JWT_VERIFY_EXPIRATION": False,
+}
 
 AUTHENTICATION_BACKENDS = [
     "graphql_jwt.backends.JSONWebTokenBackend",
     "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
 ]
-
-GRAPHQL_JWT = {
-    "JWT_VERIFY_EXPIRATION": False,
-    "JWT_REFRESH_EXPIRATION_DELTA": timedelta(days=7),
-    "JWT_AUTH_HEADER_NAME": "Authorization",
-}
 
 # STATIC FILES
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -126,32 +115,22 @@ if DEBUG:
     ALLOWED_HOSTS = ["*"]
     CSRF_TRUSTED_ORIGINS = ["*"]
     CORS_ALLOW_ALL_ORIGINS = True
+    CSRF_COOKIE_NAME = "csrftoken"
 
-    # Database settings
+    # Databse settings
     DATABASES = {
         "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": config.DB_NAME,
-            "USER": config.DB_USER,
-            "PASSWORD": config.DB_PASSWORD,
-            "HOST": config.DB_HOST,
-            "PORT": config.DB_PORT,
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite",
         }
     }
-
-    # # Databse settings
-    # DATABASES = {
-    #     "default": {
-    #         "ENGINE": "django.db.backends.sqlite3",
-    #         "NAME": BASE_DIR / "db.sqlite",
-    #     }
-    # }
 
 else:
     # CORS settings
     CORS_ALLOW_ALL_ORIGINS = True
     CSRF_TRUSTED_ORIGINS = config.CSRF_TRUSTED_ORIGINS
     ALLOWED_HOSTS = config.ALLOWED_HOSTS
+    CSRF_COOKIE_NAME = "csrftoken"
 
     # Database settings
     DATABASES = {

@@ -6,8 +6,12 @@
 
 #### Username:
 
-admin@diveschedule.com
+info@diveschedule.com
 
 #### Password:
 
 password
+
+#### Template Schedule Data Date:
+
+2021 / 03 / 30
