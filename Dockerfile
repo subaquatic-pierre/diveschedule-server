@@ -65,9 +65,9 @@ ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 COPY . /app/
 WORKDIR /app
 
-# RUN python3 manage.py makemigrations && \
-#     python3 manage.py migrate && \
-#     python3 manage.py loaddata users profiles days bookings
+RUN python3 manage.py makemigrations && \
+    python3 manage.py migrate && \
+    python3 manage.py loaddata users profiles days bookings
 
 
 CMD python3 manage.py runserver 0.0.0.0:8000
