@@ -1,24 +1,31 @@
 import os
 import ast
-import json
+import environ
 from pathlib import Path
-from datetime import timedelta
+
+env = environ.Env()
+# reading .env file
+environ.Env.read_env()
+
+print(env("SECRET_KEY"))
+
 
 def get_list(text):
     return [item.strip() for item in text.split(",")]
 
 
 def get_bool_from_env(name, default_value):
-    if name in os.environ:
-        value = os.environ[name]
+    if name in env:
+        value = env(name)
         try:
             return ast.literal_eval(value)
         except ValueError as e:
             raise ValueError(f"{value} is an invalid value for {name}") from e
     return default_value
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = env("SECRET_KEY")
 DEBUG = get_bool_from_env("DEBUG", True)
 
 APPEND_SLASH = False
@@ -27,8 +34,8 @@ WSGI_APPLICATION = "app.wsgi.application"
 ROOT_URLCONF = "app.urls"
 
 # CORS settings
-ALLOWED_HOSTS = get_list(os.environ.get("ALLOWED_HOSTS"))
-CSRF_TRUSTED_ORIGINS = get_list(os.environ.get("CSRF_TRUSTED_ORIGINS"))
+ALLOWED_HOSTS = get_list(env("ALLOWED_HOSTS"))
+CSRF_TRUSTED_ORIGINS = get_list(env("CSRF_TRUSTED_ORIGINS"))
 
 
 # Application definition
@@ -69,9 +76,9 @@ USE_TZ = True
 
 # STATIC FILES
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-MEDIA_URL = os.environ.get("MEDIA_URL", "/media/")
+MEDIA_URL = env("MEDIA_URL", default="/media/")
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATIC_URL = os.environ.get("STATIC_URL", "/static/")
+STATIC_URL = env("STATIC_URL", default="/static/")
 
 # Static files
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
@@ -126,23 +133,18 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # Database config
-DB_ENGINE = os.environ.get("DB_ENGINE", "django.db.backends.sqlite3")
+DB_ENGINE = env("DB_ENGINE", "django.db.backends.sqlite3")
 if DB_ENGINE == "django.db.backends.sqlite3":
-    DATABASES = {
-        "default": {
-            "ENGINE": DB_ENGINE,
-            "NAME": "db.sqlite"
-        }
-    }
+    DATABASES = {"default": {"ENGINE": DB_ENGINE, "NAME": "db.sqlite"}}
 else:
     DATABASES = {
         "default": {
             "ENGINE": DB_ENGINE,
-            "NAME": os.environ.get("DB_NAME","")
-            "USER": os.environ.get("DB_USER","")
-            "PASSWORD": os.environ.get("DB_PASSWORD","")
-            "HOST": os.environ.get("DB_HOST","")
-            "PORT": os.environ.get("DB_PORT","")
+            "NAME": env("DB_NAME", ""),
+            "USER": env("DB_USER", ""),
+            "PASSWORD": env("DB_PASSWORD", ""),
+            "HOST": env("DB_HOST", ""),
+            "PORT": env("DB_PORT", ""),
         }
     }
 
@@ -164,7 +166,7 @@ if DEBUG == False:
             "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
         },
     ]
-    
+
 
 # ---------------------- HIDE ALL BELOW FOR SECURITY ----------------------
 
