@@ -66,4 +66,4 @@ COPY . /app/
 WORKDIR /app
 
 RUN chmod +x entry_point.sh
-CMD [ "./entry_point.sh" ]
+CMD [ "./scripts/docker_entry_point.sh" ]
