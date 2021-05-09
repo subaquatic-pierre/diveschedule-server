@@ -1,32 +1,35 @@
 import os
+import ast
+import json
 from pathlib import Path
-from .config import Config
 from datetime import timedelta
 
-config = Config()
+def get_list(text):
+    return [item.strip() for item in text.split(",")]
 
 
-os.environ.get("SECRET_KEY")
-
-os.environ.get("DB_USER")
-os.environ.get("DB_PASSWORD")
-os.environ.get("DB_HOST")
-os.environ.get("DB_PORT")
-os.environ.get("EMAIL_URL")
-get_list(os.environ.get("ALLOWED_HOSTS"))
-get_list(os.environ.get("CSRF_TRUSTED_ORIGINS"))
-os.environ.get("AWS_MEDIA_BUCKET_NAME")
-os.environ.get("AWS_STORAGE_BUCKET_NAME")
-os.environ.get("AWS_ACCESS_KEY_ID")
-os.environ.get("AWS_SECRET_ACCESS_KEY")
+def get_bool_from_env(name, default_value):
+    if name in os.environ:
+        value = os.environ[name]
+        try:
+            return ast.literal_eval(value)
+        except ValueError as e:
+            raise ValueError(f"{value} is an invalid value for {name}") from e
+    return default_value
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = config.SECRET_KEY
+SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = get_bool_from_env("DEBUG", True)
-APPEND_SLASH = False
 
+APPEND_SLASH = False
+CSRF_COOKIE_NAME = "csrftoken"
 WSGI_APPLICATION = "app.wsgi.application"
 ROOT_URLCONF = "app.urls"
+
+# CORS settings
+ALLOWED_HOSTS = get_list(os.environ.get("ALLOWED_HOSTS"))
+CSRF_TRUSTED_ORIGINS = get_list(os.environ.get("CSRF_TRUSTED_ORIGINS"))
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -63,8 +66,14 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+
+# STATIC FILES
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = os.environ.get("MEDIA_URL", "/media/")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_URL = os.environ.get("STATIC_URL", "/static/")
+
 # Static files
-STATIC_URL = "/static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 GRAPHENE = {
@@ -116,47 +125,31 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
 ]
 
-# STATIC FILES
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-MEDIA_URL = os.environ.get("MEDIA_URL", "/media/")
-
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATIC_URL = os.environ.get("STATIC_URL", "/static/")
-
+# Database config
 DB_ENGINE = os.environ.get("DB_ENGINE", "django.db.backends.sqlite3")
-
-DATABASES = {
-    "default": {
-        "ENGINE": DB_ENGINE,
-        "NAME": config.DB_NAME,
-        "USER": config.DB_USER,
-        "PASSWORD": config.DB_PASSWORD,
-        "HOST": config.DB_HOST,
-        "PORT": config.DB_PORT,
+if DB_ENGINE == "django.db.backends.sqlite3":
+    DATABASES = {
+        "default": {
+            "ENGINE": DB_ENGINE,
+            "NAME": "db.sqlite"
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": DB_ENGINE,
+            "NAME": os.environ.get("DB_NAME","")
+            "USER": os.environ.get("DB_USER","")
+            "PASSWORD": os.environ.get("DB_PASSWORD","")
+            "HOST": os.environ.get("DB_HOST","")
+            "PORT": os.environ.get("DB_PORT","")
+        }
+    }
 
 
 # Check if production or development environment
-if DEBUG:
-    # CORS settings
-    ALLOWED_HOSTS = ["*"]
-    CSRF_TRUSTED_ORIGINS = ["*"]
+if DEBUG == False:
     CORS_ALLOW_ALL_ORIGINS = True
-    CSRF_COOKIE_NAME = "csrftoken"
-
-    # Databse settings
-
-
-else:
-    # CORS settings
-    CORS_ALLOW_ALL_ORIGINS = True
-    CSRF_TRUSTED_ORIGINS = config.CSRF_TRUSTED_ORIGINS
-    ALLOWED_HOSTS = config.ALLOWED_HOSTS
-    CSRF_COOKIE_NAME = "csrftoken"
-
-    # Database settings
-
     AUTH_PASSWORD_VALIDATORS = [
         {
             "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -171,6 +164,7 @@ else:
             "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
         },
     ]
+    
 
 # ---------------------- HIDE ALL BELOW FOR SECURITY ----------------------
 
