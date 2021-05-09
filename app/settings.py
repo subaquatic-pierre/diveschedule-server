@@ -23,7 +23,7 @@ def get_bool_from_env(name, default_value):
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env("SECRET_KEY")
-DEBUG = get_bool_from_env("DEBUG", True)
+DEBUG = env("DEBUG", default=True)
 
 APPEND_SLASH = False
 CSRF_COOKIE_NAME = "csrftoken"
@@ -31,8 +31,8 @@ WSGI_APPLICATION = "app.wsgi.application"
 ROOT_URLCONF = "app.urls"
 
 # CORS settings
-ALLOWED_HOSTS = get_list(env("ALLOWED_HOSTS"))
-CSRF_TRUSTED_ORIGINS = get_list(env("CSRF_TRUSTED_ORIGINS"))
+ALLOWED_HOSTS = env("ALLOWED_HOSTS")
+CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS")
 
 
 # Application definition
