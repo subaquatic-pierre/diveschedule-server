@@ -5,9 +5,24 @@ from datetime import timedelta
 
 config = Config()
 
+
+os.environ.get("SECRET_KEY")
+
+os.environ.get("DB_USER")
+os.environ.get("DB_PASSWORD")
+os.environ.get("DB_HOST")
+os.environ.get("DB_PORT")
+os.environ.get("EMAIL_URL")
+get_list(os.environ.get("ALLOWED_HOSTS"))
+get_list(os.environ.get("CSRF_TRUSTED_ORIGINS"))
+os.environ.get("AWS_MEDIA_BUCKET_NAME")
+os.environ.get("AWS_STORAGE_BUCKET_NAME")
+os.environ.get("AWS_ACCESS_KEY_ID")
+os.environ.get("AWS_SECRET_ACCESS_KEY")
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config.SECRET_KEY
-DEBUG = config.DEBUG
+DEBUG = get_bool_from_env("DEBUG", True)
 APPEND_SLASH = False
 
 WSGI_APPLICATION = "app.wsgi.application"
@@ -108,6 +123,19 @@ MEDIA_URL = os.environ.get("MEDIA_URL", "/media/")
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = os.environ.get("STATIC_URL", "/static/")
 
+DB_ENGINE = os.environ.get("DB_ENGINE", "django.db.backends.sqlite3")
+
+DATABASES = {
+    "default": {
+        "ENGINE": DB_ENGINE,
+        "NAME": config.DB_NAME,
+        "USER": config.DB_USER,
+        "PASSWORD": config.DB_PASSWORD,
+        "HOST": config.DB_HOST,
+        "PORT": config.DB_PORT,
+    }
+}
+
 
 # Check if production or development environment
 if DEBUG:
@@ -118,12 +146,7 @@ if DEBUG:
     CSRF_COOKIE_NAME = "csrftoken"
 
     # Databse settings
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite",
-        }
-    }
+
 
 else:
     # CORS settings
@@ -133,16 +156,6 @@ else:
     CSRF_COOKIE_NAME = "csrftoken"
 
     # Database settings
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": config.DB_NAME,
-            "USER": config.DB_USER,
-            "PASSWORD": config.DB_PASSWORD,
-            "HOST": config.DB_HOST,
-            "PORT": config.DB_PORT,
-        }
-    }
 
     AUTH_PASSWORD_VALIDATORS = [
         {
