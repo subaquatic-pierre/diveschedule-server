@@ -33,6 +33,7 @@ ROOT_URLCONF = "app.urls"
 # CORS settings
 ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS")
+CORS_ALLOW_ALL_ORIGINS = env("CORS_ALLOW_ALL_ORIGINS", default=True)
 
 
 # Application definition
@@ -149,7 +150,6 @@ else:
 
 # Check if production or development environment
 if DEBUG == False:
-    CORS_ALLOW_ALL_ORIGINS = True
     AUTH_PASSWORD_VALIDATORS = [
         {
             "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",

@@ -1,4 +1,4 @@
-FROM python:3.8-slim
+FROM python:3.8-slim-buster
 
 RUN apt-get -y update \
     && apt-get install -y \
@@ -62,10 +62,11 @@ ENV AWS_STORAGE_BUCKET_NAME=$AWS_STORAGE_BUCKET_NAME
 ENV AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
 ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 ENV DB_ENGINE=$DB_ENGINE
+ENV CORS_ALLOW_ALL_ORIGINS=$CORS_ALLOW_ALL_ORIGINS
 # ------
 
 COPY . /app/
 WORKDIR /app
 
-RUN chmod +x entry_point.sh
+RUN chmod +x ./scripts/docker_entry_point.sh
 CMD [ "./scripts/docker_entry_point.sh" ]
