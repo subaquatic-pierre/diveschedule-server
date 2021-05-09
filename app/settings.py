@@ -4,10 +4,7 @@ import environ
 from pathlib import Path
 
 env = environ.Env()
-# reading .env file
 environ.Env.read_env()
-
-print(env("SECRET_KEY"))
 
 
 def get_list(text):
@@ -133,18 +130,19 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # Database config
-DB_ENGINE = env("DB_ENGINE", "django.db.backends.sqlite3")
+DB_ENGINE = env("DB_ENGINE", default="django.db.backends.sqlite3")
+
 if DB_ENGINE == "django.db.backends.sqlite3":
     DATABASES = {"default": {"ENGINE": DB_ENGINE, "NAME": "db.sqlite"}}
 else:
     DATABASES = {
         "default": {
             "ENGINE": DB_ENGINE,
-            "NAME": env("DB_NAME", ""),
-            "USER": env("DB_USER", ""),
-            "PASSWORD": env("DB_PASSWORD", ""),
-            "HOST": env("DB_HOST", ""),
-            "PORT": env("DB_PORT", ""),
+            "NAME": env("DB_NAME", default=""),
+            "USER": env("DB_USER", default=""),
+            "PASSWORD": env("DB_PASSWORD", default=""),
+            "HOST": env("DB_HOST", default=""),
+            "PORT": env("DB_PORT", default=""),
         }
     }
 
