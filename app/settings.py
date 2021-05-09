@@ -6,21 +6,6 @@ from pathlib import Path
 env = environ.Env()
 environ.Env.read_env()
 
-
-def get_list(text):
-    return [item.strip() for item in text.split(",")]
-
-
-def get_bool_from_env(name, default_value):
-    if name in env:
-        value = env(name)
-        try:
-            return ast.literal_eval(value)
-        except ValueError as e:
-            raise ValueError(f"{value} is an invalid value for {name}") from e
-    return default_value
-
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG", default=True)
@@ -31,10 +16,9 @@ WSGI_APPLICATION = "app.wsgi.application"
 ROOT_URLCONF = "app.urls"
 
 # CORS settings
-ALLOWED_HOSTS = env("ALLOWED_HOSTS")
-CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS")
-CORS_ALLOW_ALL_ORIGINS = env("CORS_ALLOW_ALL_ORIGINS", default=True)
-
+ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(",")
+CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS").split(",")
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 INSTALLED_APPS = [
