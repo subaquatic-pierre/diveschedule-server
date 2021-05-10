@@ -1,4 +1,5 @@
 #! /bin/bash
-source venv/bin/activate
 
+cd ..
+source venv/bin/activate
 python3 manage.py runserver
