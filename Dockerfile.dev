@@ -63,5 +63,6 @@ ENV CORS_ALLOW_ALL_ORIGINS=$CORS_ALLOW_ALL_ORIGINS
 
 COPY . /app
 WORKDIR /app
+RUN pip3 install -r requirements.txt
 
 CMD [ "./scripts/docker_entry_point_dev.sh" ]
