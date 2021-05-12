@@ -7,11 +7,7 @@
       "last_login": "2021-03-25T08:06:33.038Z",
       "is_superuser": true,
       "email": "admin@diveschedule.com",
-      "is_staff": true,
-      "is_active": true,
-      "date_joined": "2021-03-04T07:59:33Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": true
     }
   },
   {
@@ -22,11 +18,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "info@diveschedule.com",
-      "is_staff": true,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": true
     }
   },
   {
@@ -37,11 +29,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "adam@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   },
   {
@@ -52,11 +40,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "eve@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   },
   {
@@ -67,11 +51,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "peter@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   },
   {
@@ -82,11 +62,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "paul@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   },
   {
@@ -97,11 +73,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "luke@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   },
   {
@@ -112,11 +84,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "john@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   },
   {
@@ -127,11 +95,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "sarah@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   },
   {
@@ -142,11 +106,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "fahad@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   },
   {
@@ -157,11 +117,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "samy@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   },
   {
@@ -172,11 +128,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "hilton@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   },
   {
@@ -187,11 +139,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "jumeira@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   },
   {
@@ -202,11 +150,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "zayeed@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   },
   {
@@ -217,11 +161,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "rain@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   },
   {
@@ -232,11 +172,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "storm@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   },
   {
@@ -247,11 +183,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "lucky@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   },
   {
@@ -262,11 +194,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "fish@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   },
   {
@@ -277,11 +205,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "shark@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   },
   {
@@ -292,11 +216,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "sky@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   },
   {
@@ -307,11 +227,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "mountain@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   },
   {
@@ -322,11 +238,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "wind@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   },
   {
@@ -337,11 +249,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "purple@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   },
   {
@@ -352,11 +260,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "halo@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   },
   {
@@ -367,11 +271,7 @@
       "last_login": null,
       "is_superuser": false,
       "email": "default@default.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2021-03-25T02:52:39Z",
-      "groups": [],
-      "user_permissions": []
+      "is_admin": false
     }
   }
 ]

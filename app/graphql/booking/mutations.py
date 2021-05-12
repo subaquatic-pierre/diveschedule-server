@@ -25,7 +25,7 @@ class CreateBooking(graphene.Mutation):
         activity = graphene.String(required=True)
         equipment = graphene.String(required=False)
 
-    # @staff_member_required
+    @staff_member_required
     def mutate(
         self, info, user_id, date, time, trip_type, activity, equipment, **kwargs
     ):
