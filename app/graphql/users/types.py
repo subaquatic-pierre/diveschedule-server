@@ -9,7 +9,7 @@ User = get_user_model()
 
 class AnonUserType(ObjectType):
     email = graphene.String()
-    is_staff = graphene.Boolean()
+    is_admin = graphene.Boolean()
 
     class Meta:
         interface = (relay.Node,)

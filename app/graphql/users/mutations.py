@@ -4,7 +4,6 @@ from graphql_jwt.decorators import staff_member_required
 
 from ...users.models import Profile
 from .types import UserType
-from ..utils import staff_permission_required
 from .types import ProfileType
 
 
@@ -32,15 +31,9 @@ class CreateUser(graphene.Mutation):
         full_name = kwargs.get("full_name", "default")
         equipment = kwargs.get("equipment", "default")
         certification_level = kwargs.get("certification_level", "default")
-        is_superuser = kwargs.get("is_superuser", False)
-        is_staff = kwargs.get("is_staff", False)
 
-        user = User(
-            email=email,
-        )
+        user = User(email=email, password=password)
         user.set_password(password)
-        user.is_superuser = is_superuser
-        user.is_staff = is_staff
 
         profile = Profile(user=user)
         profile.full_name = full_name
