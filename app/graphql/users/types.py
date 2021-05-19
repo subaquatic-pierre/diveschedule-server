@@ -7,12 +7,12 @@ from ...users.models import Profile
 User = get_user_model()
 
 
-class AnonUserType(ObjectType):
-    email = graphene.String()
-    is_admin = graphene.Boolean()
+# class AnonUserType(ObjectType):
+#     email = graphene.String()
+#     is_admin = graphene.Boolean()
 
-    class Meta:
-        interface = (relay.Node,)
+#     class Meta:
+#         interface = (relay.Node,)
 
 
 class UserType(DjangoObjectType):
@@ -25,9 +25,9 @@ class UserType(DjangoObjectType):
         interface = (relay.Node,)
 
 
-class ViewerResult(Union):
-    class Meta:
-        types = (AnonUserType, UserType)
+# class ViewerResult(Union):
+#     class Meta:
+#         types = (AnonUserType, UserType)
 
 
 class UserConnection(relay.Connection):

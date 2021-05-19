@@ -5,7 +5,8 @@ from graphene_django import DjangoConnectionField
 from django.contrib.auth import get_user_model
 from graphql_jwt.decorators import staff_member_required
 
-from .types import UserType, UserConnection, ViewerResult, AnonUserType, ProfileType
+from ...users.models import Profile
+from .types import UserType, UserConnection, ProfileType
 from .mutations import CreateUser, EditUser, DeleteUser, EditProfile
 from ..utils import get_viewer
 
@@ -19,7 +20,7 @@ class UserQueries(graphene.ObjectType):
         UserConnection, full_name=graphene.String(), required=False
     )
     all_users = relay.ConnectionField(UserConnection)
-    viewer = graphene.Field(ViewerResult)
+    viewer = graphene.Field(UserType)
     profile = graphene.Field(ProfileType, username=graphene.String())
 
     def resolve_profile(self, info, username):
@@ -30,12 +31,14 @@ class UserQueries(graphene.ObjectType):
     def resolve_search_users(self, info, full_name, **kwargs):
         return User.objects.filter(profile__full_name__icontains=full_name)
 
-    # @staff_member_required
     def resolve_viewer(self, info, **kwargs):
         user = info.context.user
-        if user.is_anonymous:
-            return AnonUserType(email="anon", is_staff=False)
-        return get_viewer(info)
+        if not user.is_authenticated:
+            anon_user = User(user)
+            profile = Profile(user)
+            anon_user.profile = profile
+            return anon_user
+        return user
 
     # @staff_member_required
     def resolve_all_users(self, info, **kwargs):
