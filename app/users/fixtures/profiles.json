@@ -2,126 +2,276 @@
   {
     "model": "users.profile",
     "pk": 1,
-    "fields": { "user": 1, "certification_level": "OW", "equipment":"FK", "full_name": "Pierre du Toit" }
+    "fields": {
+      "user": 1,
+      "email": "admin@diveschedule.com",
+      "certification_level": "OW",
+      "equipment": "FK",
+      "full_name": "Pierre du Toit"
+    }
   },
   {
     "model": "users.profile",
     "pk": 2,
-    "fields": { "user": 2, "certification_level": "OW", "equipment":"FK", "full_name": "SBDC Admin" }
+    "fields": {
+      "user": 2,
+      "certification_level": "OW",
+      "equipment": "FK",
+      "email": "info@diveschedule.com",
+      "full_name": "SBDC Admin"
+    }
   },
   {
     "model": "users.profile",
     "pk": 3,
-    "fields": { "user": 3, "certification_level": "OW" , "equipment":"FK", "full_name": "Adam Son"}
+    "fields": {
+      "user": 3,
+      "certification_level": "OW",
+      "email": "adam@gmail.com",
+      "equipment": "FK",
+      "full_name": "Adam Son"
+    }
   },
   {
     "model": "users.profile",
     "pk": 4,
-    "fields": { "user": 4, "certification_level": "OW" , "equipment":"FK", "full_name": "Eve Blossom"}
+    "fields": {
+      "user": 4,
+      "certification_level": "OW",
+      "equipment": "FK",
+      "email": "eve@gmail.com",
+      "full_name": "Eve Blossom"
+    }
   },
   {
     "model": "users.profile",
     "pk": 5,
-    "fields": { "user": 5, "certification_level": "OW" , "equipment":"FK", "full_name": "Peter Lemon"}
+    "fields": {
+      "user": 5,
+      "certification_level": "OW",
+      "equipment": "FK",
+      "email": "peter@gmail.com",
+      "full_name": "Peter Lemon"
+    }
   },
   {
     "model": "users.profile",
     "pk": 6,
-    "fields": { "user": 6, "certification_level": "OW" , "equipment":"FK", "full_name": "Paul Wash"}
+    "fields": {
+      "user": 6,
+      "certification_level": "OW",
+      "email": "paul@gmail.com",
+      "equipment": "FK",
+      "full_name": "Paul Wash"
+    }
   },
   {
     "model": "users.profile",
     "pk": 7,
-    "fields": { "user": 7, "certification_level": "OW" , "equipment":"FK", "full_name": "Luke Eee"}
+    "fields": {
+      "user": 7,
+      "email": "luke@gmail.com",
+      "certification_level": "OW",
+      "equipment": "FK",
+      "full_name": "Luke Eee"
+    }
   },
   {
     "model": "users.profile",
     "pk": 8,
-    "fields": { "user": 8, "certification_level": "AOW" , "equipment":"FK", "full_name": "John Bush"}
+    "fields": {
+      "user": 8,
+      "certification_level": "AOW",
+      "equipment": "FK",
+      "email": "john@gmail.com",
+      "full_name": "John Bush"
+    }
   },
   {
     "model": "users.profile",
     "pk": 9,
-    "fields": { "user": 9, "certification_level": "AOW" , "equipment":"FK", "full_name": "Sarah Bush"}
+    "fields": {
+      "user": 9,
+      "certification_level": "AOW",
+      "equipment": "FK",
+      "email": "sarah@gmail.com",
+      "full_name": "Sarah Bush"
+    }
   },
   {
     "model": "users.profile",
     "pk": 10,
-    "fields": { "user": 10, "certification_level": "AOW" , "equipment":"FK", "full_name": "Fahad Little"}
+    "fields": {
+      "user": 10,
+      "certification_level": "AOW",
+      "email": "fahad@gmail.com",
+      "equipment": "FK",
+      "full_name": "Fahad Little"
+    }
   },
   {
     "model": "users.profile",
     "pk": 11,
-    "fields": { "user": 11, "certification_level": "AOW" , "equipment":"FK", "full_name": "Sammy Row"}
+    "fields": {
+      "user": 11,
+      "certification_level": "AOW",
+      "equipment": "FK",
+      "email": "samy@gmail.com",
+      "full_name": "Sammy Row"
+    }
   },
   {
     "model": "users.profile",
     "pk": 12,
-    "fields": { "user": 12, "certification_level": "AOW" , "equipment":"FK", "full_name": "Hilton Life"}
+    "fields": {
+      "user": 12,
+      "certification_level": "AOW",
+      "email": "hilton@gmail.com",
+      "equipment": "FK",
+      "full_name": "Hilton Life"
+    }
   },
   {
     "model": "users.profile",
     "pk": 13,
-    "fields": { "user": 13, "certification_level": "AOW" , "equipment":"FK", "full_name": "Jumeira Beach"}
+    "fields": {
+      "user": 13,
+      "certification_level": "AOW",
+      "email": "jumeira@gmail.com",
+      "equipment": "FK",
+      "full_name": "Jumeira Beach"
+    }
   },
   {
     "model": "users.profile",
     "pk": 14,
-    "fields": { "user": 14, "certification_level": "AOW" , "equipment":"FK", "full_name": "Zayeed Road"}
+    "fields": {
+      "user": 14,
+      "certification_level": "AOW",
+      "email": "zayeed@gmail.com",
+      "equipment": "FK",
+      "full_name": "Zayeed Road"
+    }
   },
   {
     "model": "users.profile",
     "pk": 15,
-    "fields": { "user": 15, "certification_level": "AOW" , "equipment":"FK", "full_name": "Rain Bow"}
+    "fields": {
+      "user": 15,
+      "certification_level": "AOW",
+      "email": "rain@gmail.com",
+      "equipment": "FK",
+      "full_name": "Rain Bow"
+    }
   },
   {
     "model": "users.profile",
     "pk": 16,
-    "fields": { "user": 16, "certification_level": "AOW" , "equipment":"FK", "full_name": "Storm Cloud"}
+    "fields": {
+      "user": 16,
+      "certification_level": "AOW",
+      "email": "storm@gmail.com",
+      "equipment": "FK",
+      "full_name": "Storm Cloud"
+    }
   },
   {
     "model": "users.profile",
     "pk": 17,
-    "fields": { "user": 17, "certification_level": "AOW" , "equipment":"FK", "full_name": "Lucky Duba"}
+    "fields": {
+      "user": 17,
+      "certification_level": "AOW",
+      "email": "lucky@gmail.com",
+      "equipment": "FK",
+      "full_name": "Lucky Duba"
+    }
   },
   {
     "model": "users.profile",
     "pk": 18,
-    "fields": { "user": 18, "certification_level": "RD" , "equipment":"FK", "full_name": "Fish Life"}
+    "fields": {
+      "user": 18,
+      "certification_level": "RD",
+      "email": "fish@gmail.com",
+      "equipment": "FK",
+      "full_name": "Fish Life"
+    }
   },
   {
     "model": "users.profile",
     "pk": 19,
-    "fields": { "user": 19, "certification_level": "RD" , "equipment":"FK", "full_name": "Shark Bait"}
+    "fields": {
+      "user": 19,
+      "certification_level": "RD",
+      "email": "shark@gmail.com",
+      "equipment": "FK",
+      "full_name": "Shark Bait"
+    }
   },
   {
     "model": "users.profile",
     "pk": 20,
-    "fields": { "user": 20, "certification_level": "RD" , "equipment":"FK", "full_name": "Sky Line"}
+    "fields": {
+      "user": 20,
+      "certification_level": "RD",
+      "email": "sky@gmail.com",
+      "equipment": "FK",
+      "full_name": "Sky Line"
+    }
   },
   {
     "model": "users.profile",
     "pk": 21,
-    "fields": { "user": 21, "certification_level": "RD" , "equipment":"FK", "full_name": "Mountain Range"}
+    "fields": {
+      "user": 21,
+      "certification_level": "RD",
+      "email": "mountain@gmail.com",
+      "equipment": "FK",
+      "full_name": "Mountain Range"
+    }
   },
   {
     "model": "users.profile",
     "pk": 22,
-    "fields": { "user": 22, "certification_level": "RD" , "equipment":"FK", "full_name": "Wind Blow"}
+    "fields": {
+      "user": 22,
+      "certification_level": "RD",
+      "email": "wind@gmail.com",
+      "equipment": "FK",
+      "full_name": "Wind Blow"
+    }
   },
   {
     "model": "users.profile",
     "pk": 23,
-    "fields": { "user": 23, "certification_level": "DM" , "equipment":"FK", "full_name": "Purple Life"}
+    "fields": {
+      "user": 23,
+      "certification_level": "DM",
+      "email": "purple@gmail.com",
+      "equipment": "FK",
+      "full_name": "Purple Life"
+    }
   },
   {
     "model": "users.profile",
     "pk": 24,
-    "fields": { "user": 24, "certification_level": "DM" , "equipment":"FK", "full_name": "Halo Con"}
+    "fields": {
+      "user": 24,
+      "certification_level": "DM",
+      "email": "halo@gmail.com",
+      "equipment": "FK",
+      "full_name": "Halo Con"
+    }
   },
   {
     "model": "users.profile",
     "pk": 25,
-    "fields": { "user": 25, "certification_level": "NA" , "equipment":"NA", "full_name": "Default"}
+    "fields": {
+      "user": 25,
+      "certification_level": "NA",
+      "email": "default@default.com",
+      "equipment": "NA",
+      "full_name": "Default"
+    }
   }
 ]
