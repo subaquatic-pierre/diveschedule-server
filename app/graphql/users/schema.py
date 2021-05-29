@@ -21,10 +21,10 @@ class UserQueries(graphene.ObjectType):
     )
     all_users = relay.ConnectionField(UserConnection)
     viewer = graphene.Field(UserType)
-    profile = graphene.Field(ProfileType, username=graphene.String())
+    user_profile = graphene.Field(ProfileType, user_id=graphene.ID())
 
-    def resolve_profile(self, info, username):
-        user = User.objects.get(username=username)
+    def resolve_user_profile(self, info, user_id):
+        user = User.objects.get(pk=user_id)
         profile = user.profile
         return profile
 
