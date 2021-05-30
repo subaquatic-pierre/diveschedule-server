@@ -89,14 +89,14 @@ class EditUser(graphene.Mutation):
         return EditUser(user=user)
 
 
-class DeleteUser(graphene.Mutation):
+class DeleteUsers(graphene.Mutation):
     deleted = graphene.Boolean()
     ids = graphene.List(graphene.ID)
 
     class Arguments:
         ids = graphene.List(graphene.ID, required=True)
 
-    # @staff_member_required
+    @staff_member_required
     def mutate(self, info, ids):
         for id in ids:
             user = User.objects.get(id=id)
@@ -106,7 +106,7 @@ class DeleteUser(graphene.Mutation):
 
             user.delete()
 
-        return DeleteUser(deleted=True, ids=ids)
+        return DeleteUsers(deleted=True, ids=ids)
 
 
 class EditProfile(graphene.Mutation):
