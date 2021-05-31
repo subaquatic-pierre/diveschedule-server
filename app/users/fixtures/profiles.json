@@ -268,9 +268,9 @@
     "pk": 25,
     "fields": {
       "user": 25,
-      "cert_level": "NA",
+      "cert_level": "OW",
       "email": "default@default.com",
-      "equipment": "NA",
+      "equipment": "FK",
       "full_name": "Default"
     }
   }

@@ -14,67 +14,78 @@ class RegisterUser(graphene.Mutation):
     user = graphene.Field(UserType)
 
     class Arguments:
+        email = graphene.String(required=True)
         password = graphene.String(required=False)
-        email = graphene.String(required=False)
         cert_level = graphene.String(required=False)
         equipment = graphene.String(required=False)
         full_name = graphene.String(required=False)
         is_superuser = graphene.Boolean(required=False)
         is_staff = graphene.Boolean(required=False)
 
-    # @staff_member_required
-    def mutate(self, info, *args, **kwargs):
-        dummy_email = f"default_email_{len(User.objects.all())+1}@default.com"
+    def mutate(self, info, **kwargs):
 
+        # User model fields
         password = kwargs.get("password", "password")
-        email = kwargs.get("email", dummy_email)
-        full_name = kwargs.get("full_name", "default")
-        equipment = kwargs.get("equipment", "default")
-        cert_level = kwargs.get("cert_level", "default")
+        email = kwargs.get("email")
 
         user = User(email=email, password=password)
         user.set_password(password)
 
+        # Profile model fields
+        full_name = kwargs.get("full_name")
+        equipment = kwargs.get("equipment")
+        cert_level = kwargs.get("cert_level")
+
         profile = Profile(user=user)
-        profile.full_name = full_name
-        profile.equipment = equipment
-        profile.cert_level = cert_level
+        profile.email(user.email)
+        if full_name:
+            profile.full_name = full_name
+        if equipment:
+            profile.equipment = equipment
+        if cert_level:
+            profile.cert_level = cert_level
 
         user.save()
         profile.save()
 
-        return CreateUser(user=user)
+        return RegisterUser(user=user)
 
 
 class CreateUser(graphene.Mutation):
     user = graphene.Field(UserType)
 
     class Arguments:
+        email = graphene.String(required=True)
         password = graphene.String(required=False)
-        email = graphene.String(required=False)
         cert_level = graphene.String(required=False)
         equipment = graphene.String(required=False)
         full_name = graphene.String(required=False)
         is_superuser = graphene.Boolean(required=False)
         is_staff = graphene.Boolean(required=False)
 
-    # @staff_member_required
-    def mutate(self, info, *args, **kwargs):
-        dummy_email = f"default_email_{len(User.objects.all())+1}@default.com"
+    @staff_member_required
+    def mutate(self, info, **kwargs):
 
+        # User model fields
         password = kwargs.get("password", "password")
-        email = kwargs.get("email", dummy_email)
-        full_name = kwargs.get("full_name", "default")
-        equipment = kwargs.get("equipment", "default")
-        cert_level = kwargs.get("cert_level", "default")
+        email = kwargs.get("email")
 
-        user = User(email=email, password=password)
+        user = User(email=email)
         user.set_password(password)
 
+        # Profile model fields
+        full_name = kwargs.get("full_name")
+        equipment = kwargs.get("equipment")
+        cert_level = kwargs.get("cert_level")
+
         profile = Profile(user=user)
-        profile.full_name = full_name
-        profile.equipment = equipment
-        profile.cert_level = cert_level
+        profile.email(user.email)
+        if full_name:
+            profile.full_name = full_name
+        if equipment:
+            profile.equipment = equipment
+        if cert_level:
+            profile.cert_level = cert_level
 
         user.save()
         profile.save()
@@ -93,7 +104,7 @@ class EditUser(graphene.Mutation):
         equipment = graphene.String(required=False)
         full_name = graphene.String(required=False)
 
-    # @staff_member_required
+    @staff_member_required
     def mutate(self, info, **kwargs):
         id = kwargs.get("id")
         password = kwargs.get("password")
