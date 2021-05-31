@@ -44,3 +44,10 @@ class Profile(models.Model):
         blank=True,
         null=True,
     )
+
+    phone_number = models.CharField(
+        max_length=256, default="Default", null=True, blank=True
+    )
+
+    def __str__(self):
+        return self.full_name

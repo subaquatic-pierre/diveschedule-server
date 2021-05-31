@@ -1,7 +1,6 @@
 import graphene
 from django.contrib.auth import get_user_model
 from graphql_jwt.decorators import staff_member_required
-from time import sleep
 
 from ...users.models import Profile
 from .types import UserType
@@ -60,6 +59,7 @@ class CreateUser(graphene.Mutation):
         cert_level = graphene.String(required=False)
         equipment = graphene.String(required=False)
         full_name = graphene.String(required=False)
+        phone_number = graphene.String(required=False)
         is_superuser = graphene.Boolean(required=False)
         is_staff = graphene.Boolean(required=False)
 
@@ -77,6 +77,7 @@ class CreateUser(graphene.Mutation):
         full_name = kwargs.get("full_name")
         equipment = kwargs.get("equipment")
         cert_level = kwargs.get("cert_level")
+        phone_number = kwargs.get("phone_number")
 
         profile = Profile(user=user)
         profile.email(user.email)
@@ -86,11 +87,65 @@ class CreateUser(graphene.Mutation):
             profile.equipment = equipment
         if cert_level:
             profile.cert_level = cert_level
+        if phone_number:
+            profile.phone_number = phone_number
 
         user.save()
         profile.save()
 
         return CreateUser(user=user)
+
+
+class UpdateProfile(graphene.Mutation):
+    user = graphene.Field(UserType)
+
+    class Arguments:
+        userId = graphene.ID()
+        email = graphene.String(required=False)
+        password = graphene.String(required=False)
+        full_name = graphene.String(required=False)
+        phone_number = graphene.String(required=False)
+        cert_level = graphene.String(required=False)
+        equipment = graphene.String(required=False)
+        is_superuser = graphene.Boolean(required=False)
+        is_staff = graphene.Boolean(required=False)
+
+    def mutate(self, info, userId, **kwargs):
+
+        user = User.objects.get(pk=userId)
+        profile = Profile.objects.get(user=user)
+
+        # User model fields
+        password = kwargs.get("password", "password")
+
+        if password:
+            user.set_password(password)
+
+        # Profile model fields
+        email = kwargs.get("email")
+        full_name = kwargs.get("full_name")
+        equipment = kwargs.get("equipment")
+        cert_level = kwargs.get("cert_level")
+        phone_number = kwargs.get("phone_number")
+
+        if full_name:
+            profile.full_name = full_name
+        if email:
+            profile.email = email
+        if equipment:
+            profile.equipment = equipment
+        if cert_level:
+            profile.cert_level = cert_level
+        if phone_number:
+            profile.phone_number = phone_number
+
+        user.save()
+        profile.save()
+
+        return CreateUser(user=user)
+
+
+# _____________________________________
 
 
 class EditUser(graphene.Mutation):
