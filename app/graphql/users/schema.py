@@ -7,9 +7,8 @@ from graphql_jwt.decorators import staff_member_required
 
 from ...users.models import Profile
 from .types import UserType, UserConnection, ProfileType
-from .mutations import CreateUser, EditUser, DeleteUsers, EditProfile
+from .mutations import CreateUser, EditUser, DeleteUsers, EditProfile, RegisterUser
 from ..utils import get_viewer
-
 
 User = get_user_model()
 
@@ -65,6 +64,7 @@ class UserQueries(graphene.ObjectType):
 class UserMutations(graphene.ObjectType):
     delete_token_cookie = graphql_jwt.DeleteJSONWebTokenCookie.Field()
     create_user = CreateUser.Field()
+    register_user = RegisterUser.Field()
     edit_user = EditUser.Field()
     delete_users = DeleteUsers.Field()
     edit_profile = EditProfile.Field()

@@ -1,16 +1,16 @@
 import graphene
 from django.contrib.auth import get_user_model
 from graphql_jwt.decorators import staff_member_required
+from time import sleep
 
 from ...users.models import Profile
 from .types import UserType
 from .types import ProfileType
 
-
 User = get_user_model()
 
 
-class CreateUser(graphene.Mutation):
+class RegisterUser(graphene.Mutation):
     user = graphene.Field(UserType)
 
     class Arguments:
@@ -44,6 +44,44 @@ class CreateUser(graphene.Mutation):
         profile.save()
 
         return CreateUser(user=user)
+
+
+class CreateUser(graphene.Mutation):
+    user = graphene.Field(UserType)
+    dummy = graphene.String()
+
+    class Arguments:
+        password = graphene.String(required=False)
+        email = graphene.String(required=False)
+        cert_level = graphene.String(required=False)
+        equipment = graphene.String(required=False)
+        full_name = graphene.String(required=False)
+        is_superuser = graphene.Boolean(required=False)
+        is_staff = graphene.Boolean(required=False)
+
+    # @staff_member_required
+    def mutate(self, info, *args, **kwargs):
+        sleep(5)
+        dummy_email = f"default_email_{len(User.objects.all())+1}@default.com"
+
+        password = kwargs.get("password", "password")
+        email = kwargs.get("email", dummy_email)
+        full_name = kwargs.get("full_name", "default")
+        equipment = kwargs.get("equipment", "default")
+        cert_level = kwargs.get("cert_level", "default")
+
+        user = User(email=email, password=password)
+        user.set_password(password)
+
+        profile = Profile(user=user)
+        profile.full_name = full_name
+        profile.equipment = equipment
+        profile.cert_level = cert_level
+
+        # user.save()
+        # profile.save()
+
+        return CreateUser(dummy="Dummy text")
 
 
 class EditUser(graphene.Mutation):
