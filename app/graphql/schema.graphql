@@ -93,7 +93,7 @@ type PageInfo {
 type ProfileType {
   id: ID!
   user: UserType!
-  certificationLevel: String
+  certLevel: String
   fullName: String
 }
 

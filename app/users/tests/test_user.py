@@ -23,7 +23,7 @@ class TestUser(GraphQLTestCase):
         return super().setUp()
 
     def test_create_user(self):
-        """ Create user mutation """
+        """Create user mutation"""
         response = self.query(
             """
             mutation CreateUser($email: String, $password: String) {
@@ -43,28 +43,28 @@ class TestUser(GraphQLTestCase):
         assert "id" in data.get("createUser").get("user")
 
     def test_edit_user(self):
-        """ Edit user mutation """
+        """Edit user mutation"""
         response = self.query(
             """
             mutation EditUser(
                 $id: ID!
                 $fullName: String
                 $email: String
-                $certificationLevel: String
+                $certLevel: String
                 $equipment: String
             ) {
                 editUser(
                 id: $id
                 fullName: $fullName
                 email: $email
-                certificationLevel: $certificationLevel
+                certLevel: $certLevel
                 equipment: $equipment
                 ) {
                     user {
                         email
                         profile {
                             fullName
-                            certificationLevel
+                            certLevel
                             equipment
                         }
                     }
@@ -76,7 +76,7 @@ class TestUser(GraphQLTestCase):
                 "id": 1,
                 "fullName": "Peter Lemon",
                 "email": "peter@lemon.com",
-                "certificationLevel": "OW",
+                "certLevel": "OW",
                 "equipment": "FK",
             },
         )
@@ -92,13 +92,11 @@ class TestUser(GraphQLTestCase):
         assert (
             profile["fullName"] == "Peter Lemon"
         ), f"Incorrect mutation response {profile}"
-        assert (
-            profile["certificationLevel"] == "OW"
-        ), f"Incorrect mutation response {profile}"
+        assert profile["certLevel"] == "OW", f"Incorrect mutation response {profile}"
         assert profile["equipment"] == "FK", f"Incorrect mutation response {profile}"
 
     def test_get_single_user(self):
-        """ Get a single user by ID """
+        """Get a single user by ID"""
         response = self.query(
             """
             query GetUser($id: ID!) {
@@ -120,7 +118,7 @@ class TestUser(GraphQLTestCase):
         ), f"Incorrect user returned from query, {user_data}"
 
     def test_get_all_users(self):
-        """ Get all users """
+        """Get all users"""
         response = self.query(
             """
             query GetUser {
@@ -150,7 +148,7 @@ class TestUser(GraphQLTestCase):
                             id
                             profile {
                                 fullName
-                                certificationLevel
+                                certLevel
                                 equipment
                             }
                         }

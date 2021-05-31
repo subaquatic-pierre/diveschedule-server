@@ -33,7 +33,7 @@ class TestTripDetail(GraphQLTestCase):
         return token
 
     def test_create_booking(self):
-        """ Create booking mutation """
+        """Create booking mutation"""
         response = self.query(
             """
             mutation CreateBooking(
@@ -77,7 +77,7 @@ class TestTripDetail(GraphQLTestCase):
             fragment ProfileFragment on UserType {
                 profile {
                     fullName
-                    certificationLevel
+                    certLevel
                 }
             }
             """,
@@ -103,7 +103,7 @@ class TestTripDetail(GraphQLTestCase):
         assert "tripDetail" in booking
 
     def test_get_booking(self):
-        """ Get a booking """
+        """Get a booking"""
         response = self.query(
             """
             query GetBooking($id: ID!) {
@@ -119,7 +119,7 @@ class TestTripDetail(GraphQLTestCase):
         self.assertResponseNoErrors(response)
 
     def test_delete_booking(self):
-        """ Delete a booking """
+        """Delete a booking"""
         response = self.query(
             """
             mutation DeleteBooking($ids: [ID]!) {

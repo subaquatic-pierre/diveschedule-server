@@ -16,43 +16,6 @@ class RegisterUser(graphene.Mutation):
     class Arguments:
         password = graphene.String(required=False)
         email = graphene.String(required=False)
-        certification_level = graphene.String(required=False)
-        equipment = graphene.String(required=False)
-        full_name = graphene.String(required=False)
-        is_superuser = graphene.Boolean(required=False)
-        is_staff = graphene.Boolean(required=False)
-
-    # @staff_member_required
-    def mutate(self, info, *args, **kwargs):
-        dummy_email = f"default_email_{len(User.objects.all())+1}@default.com"
-
-        password = kwargs.get("password", "password")
-        email = kwargs.get("email", dummy_email)
-        full_name = kwargs.get("full_name", "default")
-        equipment = kwargs.get("equipment", "default")
-        certification_level = kwargs.get("certification_level", "default")
-
-        user = User(email=email, password=password)
-        user.set_password(password)
-
-        profile = Profile(user=user)
-        profile.full_name = full_name
-        profile.equipment = equipment
-        profile.certification_level = certification_level
-
-        user.save()
-        profile.save()
-
-        return CreateUser(user=user)
-
-
-class CreateUser(graphene.Mutation):
-    user = graphene.Field(UserType)
-    dummy = graphene.String()
-
-    class Arguments:
-        password = graphene.String(required=False)
-        email = graphene.String(required=False)
         cert_level = graphene.String(required=False)
         equipment = graphene.String(required=False)
         full_name = graphene.String(required=False)
@@ -61,7 +24,6 @@ class CreateUser(graphene.Mutation):
 
     # @staff_member_required
     def mutate(self, info, *args, **kwargs):
-        sleep(5)
         dummy_email = f"default_email_{len(User.objects.all())+1}@default.com"
 
         password = kwargs.get("password", "password")
@@ -78,10 +40,46 @@ class CreateUser(graphene.Mutation):
         profile.equipment = equipment
         profile.cert_level = cert_level
 
-        # user.save()
-        # profile.save()
+        user.save()
+        profile.save()
 
-        return CreateUser(dummy="Dummy text")
+        return CreateUser(user=user)
+
+
+class CreateUser(graphene.Mutation):
+    user = graphene.Field(UserType)
+
+    class Arguments:
+        password = graphene.String(required=False)
+        email = graphene.String(required=False)
+        cert_level = graphene.String(required=False)
+        equipment = graphene.String(required=False)
+        full_name = graphene.String(required=False)
+        is_superuser = graphene.Boolean(required=False)
+        is_staff = graphene.Boolean(required=False)
+
+    # @staff_member_required
+    def mutate(self, info, *args, **kwargs):
+        dummy_email = f"default_email_{len(User.objects.all())+1}@default.com"
+
+        password = kwargs.get("password", "password")
+        email = kwargs.get("email", dummy_email)
+        full_name = kwargs.get("full_name", "default")
+        equipment = kwargs.get("equipment", "default")
+        cert_level = kwargs.get("cert_level", "default")
+
+        user = User(email=email, password=password)
+        user.set_password(password)
+
+        profile = Profile(user=user)
+        profile.full_name = full_name
+        profile.equipment = equipment
+        profile.cert_level = cert_level
+
+        user.save()
+        profile.save()
+
+        return CreateUser(user=user)
 
 
 class EditUser(graphene.Mutation):
@@ -91,7 +89,7 @@ class EditUser(graphene.Mutation):
         id = graphene.ID(required=True)
         password = graphene.String(required=False)
         email = graphene.String(required=False)
-        certification_level = graphene.String(required=False)
+        cert_level = graphene.String(required=False)
         equipment = graphene.String(required=False)
         full_name = graphene.String(required=False)
 
@@ -102,7 +100,7 @@ class EditUser(graphene.Mutation):
         email = kwargs.get("email")
         full_name = kwargs.get("full_name")
         equipment = kwargs.get("equipment")
-        certification_level = kwargs.get("certification_level")
+        cert_level = kwargs.get("cert_level")
 
         user = User.objects.get(id=id)
         profile = Profile.objects.get(user=user)
@@ -114,8 +112,8 @@ class EditUser(graphene.Mutation):
             user.set_password(password)
         if email:
             user.email = email
-        if certification_level:
-            profile.certification_level = certification_level
+        if cert_level:
+            profile.cert_level = cert_level
         if full_name:
             profile.full_name = full_name
         if equipment:

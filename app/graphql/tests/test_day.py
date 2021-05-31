@@ -19,7 +19,7 @@ class TestDay(GraphQLTestCase):
         return super().setUp()
 
     def test_get_day(self):
-        """ Get a day """
+        """Get a day"""
         response = self.query(
             """ 
             query GetDay($date: Date!) {
@@ -58,7 +58,7 @@ class TestDay(GraphQLTestCase):
             fragment ProfileFragment on UserType {
                 profile {
                     fullName
-                    certificationLevel
+                    certLevel
                 }
             }   
 
@@ -85,7 +85,7 @@ class TestDay(GraphQLTestCase):
         assert "tripdetailSet" in day
 
     def test_create_trip_detail(self):
-        """ Create trip detail mutation """
+        """Create trip detail mutation"""
         response = self.query(
             """
             mutation CreateDiveTripDetail(
@@ -139,7 +139,7 @@ class TestDay(GraphQLTestCase):
         assert trip_detail["tripType"] == "PM_BOAT"
 
     def test_edit_trip_detail(self):
-        """ Edit trip detail mutation """
+        """Edit trip detail mutation"""
         response = self.query(
             """
             mutation EditTripDetail(
