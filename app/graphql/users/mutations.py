@@ -4,7 +4,6 @@ from graphql_jwt.decorators import staff_member_required
 
 from ...users.models import Profile
 from .types import UserType
-from .types import ProfileType
 
 User = get_user_model()
 
@@ -36,7 +35,7 @@ class RegisterUser(graphene.Mutation):
         cert_level = kwargs.get("cert_level")
 
         profile = Profile(user=user)
-        profile.email(user.email)
+        profile.email = user.email
         if full_name:
             profile.full_name = full_name
         if equipment:
@@ -80,7 +79,7 @@ class CreateUser(graphene.Mutation):
         phone_number = kwargs.get("phone_number")
 
         profile = Profile(user=user)
-        profile.email(user.email)
+        profile.email = user.email
         if full_name:
             profile.full_name = full_name
         if equipment:
@@ -128,67 +127,16 @@ class UpdateProfile(graphene.Mutation):
         cert_level = kwargs.get("cert_level")
         phone_number = kwargs.get("phone_number")
 
-        if full_name:
-            profile.full_name = full_name
-        if email:
-            profile.email = email
-        if equipment:
-            profile.equipment = equipment
-        if cert_level:
-            profile.cert_level = cert_level
-        if phone_number:
-            profile.phone_number = phone_number
+        profile.full_name = full_name
+        profile.email = email
+        profile.equipment = equipment
+        profile.cert_level = cert_level
+        profile.phone_number = phone_number
 
         user.save()
         profile.save()
 
         return CreateUser(user=user)
-
-
-# _____________________________________
-
-
-class EditUser(graphene.Mutation):
-    user = graphene.Field(UserType)
-
-    class Arguments:
-        id = graphene.ID(required=True)
-        password = graphene.String(required=False)
-        email = graphene.String(required=False)
-        cert_level = graphene.String(required=False)
-        equipment = graphene.String(required=False)
-        full_name = graphene.String(required=False)
-
-    @staff_member_required
-    def mutate(self, info, **kwargs):
-        id = kwargs.get("id")
-        password = kwargs.get("password")
-        email = kwargs.get("email")
-        full_name = kwargs.get("full_name")
-        equipment = kwargs.get("equipment")
-        cert_level = kwargs.get("cert_level")
-
-        user = User.objects.get(id=id)
-        profile = Profile.objects.get(user=user)
-
-        if not user:
-            raise Exception("No user found")
-
-        if password:
-            user.set_password(password)
-        if email:
-            user.email = email
-        if cert_level:
-            profile.cert_level = cert_level
-        if full_name:
-            profile.full_name = full_name
-        if equipment:
-            profile.equipment = equipment
-
-        profile.save()
-        user.save()
-
-        return EditUser(user=user)
 
 
 class DeleteUsers(graphene.Mutation):
@@ -209,16 +157,3 @@ class DeleteUsers(graphene.Mutation):
             user.delete()
 
         return DeleteUsers(deleted=True, ids=ids)
-
-
-class EditProfile(graphene.Mutation):
-    profile = graphene.Field(ProfileType)
-
-    class Arguments:
-        password = graphene.String(required=True)
-        email = graphene.String(required=True)
-
-    @staff_member_required
-    def mutate(self, info, password, email):
-        profile = User.objects.get(id=1).profile
-        return profile

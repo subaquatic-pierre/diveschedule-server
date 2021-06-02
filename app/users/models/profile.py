@@ -32,7 +32,6 @@ class Profile(models.Model):
     cert_level = models.CharField(
         max_length=256,
         choices=CERT_LEVEL_CHOICES,
-        default="OW",
         blank=True,
         null=True,
     )
@@ -40,14 +39,11 @@ class Profile(models.Model):
     equipment = models.CharField(
         max_length=256,
         choices=EQUIPMENT_CHOICES,
-        default="FK",
         blank=True,
         null=True,
     )
 
-    phone_number = models.CharField(
-        max_length=256, default="Default", null=True, blank=True
-    )
+    phone_number = models.CharField(max_length=256, null=True, blank=True)
 
     def __str__(self):
         return self.full_name

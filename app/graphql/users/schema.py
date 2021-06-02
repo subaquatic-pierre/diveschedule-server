@@ -9,9 +9,7 @@ from ...users.models import Profile
 from .types import UserType, UserConnection, ProfileType
 from .mutations import (
     CreateUser,
-    EditUser,
     DeleteUsers,
-    EditProfile,
     RegisterUser,
     UpdateProfile,
 )
@@ -76,5 +74,3 @@ class UserMutations(graphene.ObjectType):
 
     # ----
     register_user = RegisterUser.Field()
-    edit_user = EditUser.Field()
-    edit_profile = EditProfile.Field()
