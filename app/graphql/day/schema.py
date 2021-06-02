@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from ...schedule.models import Day, Note
 from graphql_jwt.decorators import staff_member_required
 
-from .types import AnonDayType, NoteType, DayUnion
+from .types import AnonDayType, NoteType, DayUnion, TripDetailType
 from .mutations import (
     CreateDay,
     CreateNote,
@@ -23,6 +23,7 @@ User = get_user_model()
 class DayQueries(graphene.ObjectType):
     day = graphene.Field(DayUnion, date=graphene.Date())
     notes = graphene.List(NoteType, date=graphene.Date())
+    daily_activity_meta = graphene.List(TripDetailType, date=graphene.Date())
 
     def resolve_day(self, info, date):
         try:
@@ -38,6 +39,11 @@ class DayQueries(graphene.ObjectType):
             return notes
         except:
             return []
+
+    def resolve_daily_activity_meta(self, info, date):
+        day = Day.objects.get(date=date)
+        print(day)
+        return []
 
 
 class DayMutations(graphene.ObjectType):

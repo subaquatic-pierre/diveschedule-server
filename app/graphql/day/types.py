@@ -1,7 +1,7 @@
 import graphene
 from graphene import relay, Union, ObjectType
 from graphene_django import DjangoObjectType
-from ...schedule.models import Day, Note, TripDetail
+from ...schedule.models import Day, Note, ActivityDetail
 
 
 class DayType(DjangoObjectType):
@@ -11,7 +11,7 @@ class DayType(DjangoObjectType):
 
 class TripDetailType(DjangoObjectType):
     class Meta:
-        model = TripDetail
+        model = ActivityDetail
 
 
 class AnonDayType(ObjectType):

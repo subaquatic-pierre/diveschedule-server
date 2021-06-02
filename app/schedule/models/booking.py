@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from .daily_details import TripDetail
+from .daily_details import ActivityDetail
 
 User = get_user_model()
 
@@ -26,8 +26,8 @@ BOOKING_STATUS_CHOICES = (
 
 
 class Booking(models.Model):
-    trip_detail = models.ForeignKey(
-        TripDetail, on_delete=models.SET_NULL, null=True, blank=True
+    activity_detail = models.ForeignKey(
+        ActivityDetail, on_delete=models.SET_NULL, null=True, blank=True
     )
     time = models.CharField(max_length=255, null=True, blank=True)
     initiated_date = models.DateField(auto_now_add=True)
@@ -44,8 +44,8 @@ class Booking(models.Model):
         blank=True,
         on_delete=models.CASCADE,
     )
-    activity = models.CharField(max_length=255, default="null")
-    equipment = models.CharField(max_length=255, default="null")
+    diver_role = models.CharField(max_length=255, null=True, blank=True)
+    equipment = models.CharField(max_length=255, null=True, blank=True)
     booking_status = models.CharField(
         max_length=255, choices=BOOKING_STATUS_CHOICES, blank=True, null=True
     )

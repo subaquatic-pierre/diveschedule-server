@@ -25,22 +25,22 @@ enum BookingTime {
   A_2PM
 }
 
-type tripType {
+type activityType {
   id: ID!
   initiatedDate: Date!
   date: Date!
   time: BookingTime!
-  tripType: BookingtripType!
+  activityType: BookingtripType!
   diver: UserType!
   bookedBy: UserType!
-  activity: String!
+  diverRole: String!
   equipment: String!
   bookingStatus: BookingBookingStatus
   cancellationReason: String
 }
 
 type CreateBooking {
-  booking: tripType
+  booking: activityType
 }
 
 type CreateUser {
@@ -64,7 +64,7 @@ type DeleteUser {
 }
 
 type EditBooking {
-  booking: tripType
+  booking: activityType
 }
 
 type EditProfile {
@@ -110,16 +110,16 @@ type Revoke {
 type RootMutation {
   editProfile(email: String!, password: String!): EditProfile
   createBooking(
-    activity: String!
-    tripType: String!
+    diverRole: String!
+    activityType: String!
     date: Date!
     diverUsername: String!
     equipment: String!
     time: String!
   ): CreateBooking
   editBooking(
-    activity: String
-    tripType: String
+    diverRole: String
+    activityType: String
     date: Date
     diverUsername: String
     equipment: String
@@ -138,8 +138,8 @@ type RootMutation {
 }
 
 type RootQuery {
-  booking(id: ID): tripType
-  bookings(date: String!): [tripType]
+  booking(id: ID): activityType
+  bookings(date: String!): [activityType]
   user(id: ID): UserType
   users(
     ids: [ID]
@@ -175,8 +175,8 @@ type UserType {
   isStaff: Boolean!
   isActive: Boolean!
   dateJoined: DateTime!
-  diverBooking: [tripType!]!
-  bookedByBooking: [tripType!]!
+  diverBooking: [activityType!]!
+  bookedByBooking: [activityType!]!
   profile: ProfileType
 }
 

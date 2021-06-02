@@ -37,18 +37,18 @@ class TestTripDetail(GraphQLTestCase):
         response = self.query(
             """
             mutation CreateBooking(
-                $activity: String!
+                $diverRole: String!
                 $userId: ID!
-                $tripType: String!
+                $activityType: String!
                 $date: Date!
                 $equipment: String!
                 $time: String!
                 $instructorId: ID
             ) {
                 createBooking(
-                activity: $activity
+                diverRole: $diverRole
                 userId: $userId
-                tripType: $tripType
+                activityType: $activityType
                 date: $date
                 equipment: $equipment
                 time: $time
@@ -61,11 +61,11 @@ class TestTripDetail(GraphQLTestCase):
             }
             fragment BookingFragment on BookingType {
                 id
-                activity
+                diverRole
                 equipment
                 time
-                tripDetail {
-                    tripType
+                activityDetail {
+                    activityType
                 }
                 instructor {
                     ...ProfileFragment
@@ -83,9 +83,9 @@ class TestTripDetail(GraphQLTestCase):
             """,
             op_name="CreateBooking",
             variables={
-                "activity": "PD",
+                "diverRole": "PD",
                 "userId": 3,
-                "tripType": "AM_BOAT",
+                "activityType": "AM_BOAT",
                 "date": "2021-03-30",
                 "equipment": "FK",
                 "time": "9AM",
@@ -98,9 +98,9 @@ class TestTripDetail(GraphQLTestCase):
 
         assert "id" in booking
         assert "diver" in booking
-        assert "activity" in booking
+        assert "diverRole" in booking
         assert "equipment" in booking
-        assert "tripDetail" in booking
+        assert "activityDetail" in booking
 
     def test_get_booking(self):
         """Get a booking"""

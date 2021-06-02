@@ -3,7 +3,7 @@ from graphene_django.utils.testing import GraphQLTestCase
 from ...graphql.schema import schema
 from django.contrib.auth import get_user_model
 from ...users.models import Profile
-from ...schedule.models import Day, Note, TripDetail
+from ...schedule.models import Day, Note, activityDetail
 
 from .utils import parse_response, print_data
 
@@ -33,7 +33,7 @@ class TestDay(GraphQLTestCase):
                             title
                             text
                         }
-                        tripdetailSet {
+                        activitydetailSet {
                             ...TripDetailFragment
                             bookingSet {
                             ...BookingFragment
@@ -45,7 +45,7 @@ class TestDay(GraphQLTestCase):
 
             fragment BookingFragment on BookingType {
                 id
-                activity
+                diverRole
                 equipment
                 instructor {
                     ...ProfileFragment
@@ -63,7 +63,7 @@ class TestDay(GraphQLTestCase):
             }   
 
             fragment TripDetailFragment on TripDetailType {
-                tripType
+                activityType
                 diveSite1
                 diveSite2
                 diveGuides {
@@ -82,7 +82,7 @@ class TestDay(GraphQLTestCase):
         assert day.get("__typename") == "DayType"
         assert "teamMembersOff" in day
         assert "noteSet" in day
-        assert "tripdetailSet" in day
+        assert "activitydetailSet" in day
 
     def test_create_trip_detail(self):
         """Create trip detail mutation"""
@@ -94,7 +94,7 @@ class TestDay(GraphQLTestCase):
                 $diveGuides: [ID]
                 $date: Date
                 $time: String
-                $tripType: String
+                $activityType: String
             ) {
                 createTripDetail(
                 diveSite1: $diveSite1
@@ -102,9 +102,9 @@ class TestDay(GraphQLTestCase):
                 diveGuides: $diveGuides
                 date: $date
                 time: $time
-                tripType: $tripType
+                activityType: $activityType
                 ) {
-                    tripDetail {
+                    activityDetail {
                         id
                         diveSite1
                         diveSite2
@@ -114,7 +114,7 @@ class TestDay(GraphQLTestCase):
                         day {
                             date
                         }
-                        tripType
+                        activityType
                     }
                 }
             }
@@ -125,18 +125,18 @@ class TestDay(GraphQLTestCase):
                 "diveSite2": "3 Rocks",
                 "diveGuides": [1],
                 "date": "2021-03-30",
-                "tripType": "PM_BOAT",
+                "activityType": "PM_BOAT",
             },
         )
         self.assertResponseNoErrors(response)
 
         data = parse_response(response)
-        trip_detail = data.get("createTripDetail").get("tripDetail")
-        assert trip_detail["diveSite1"] == "Inchcape 1"
-        assert trip_detail["diveSite2"] == "3 Rocks"
-        dive_guides = trip_detail["diveGuides"]
+        activity_detail = data.get("createTripDetail").get("activityDetail")
+        assert activity_detail["diveSite1"] == "Inchcape 1"
+        assert activity_detail["diveSite2"] == "3 Rocks"
+        dive_guides = activity_detail["diveGuides"]
         assert len(dive_guides) >= 0
-        assert trip_detail["tripType"] == "PM_BOAT"
+        assert activity_detail["activityType"] == "PM_BOAT"
 
     def test_edit_trip_detail(self):
         """Edit trip detail mutation"""
@@ -154,7 +154,7 @@ class TestDay(GraphQLTestCase):
                 diveSite2: $diveSite2
                 diveGuides: $diveGuides
                 ) {
-                    tripDetail {
+                    activityDetail {
                         id
                         diveSite1
                         diveSite2
@@ -176,7 +176,7 @@ class TestDay(GraphQLTestCase):
         self.assertResponseNoErrors(response)
 
         data = parse_response(response)
-        trip_detail = data.get("editTripDetail").get("tripDetail")
+        activity_detail = data.get("editTripDetail").get("activityDetail")
 
-        assert trip_detail["diveSite1"] == "Dibba Rock"
-        assert trip_detail["diveSite2"] == "3 Rocks"
+        assert activity_detail["diveSite1"] == "Dibba Rock"
+        assert activity_detail["diveSite2"] == "3 Rocks"

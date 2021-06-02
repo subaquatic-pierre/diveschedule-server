@@ -24,7 +24,7 @@ DIVE_SITE_CHOICES = (
     ("Other", "Other"),
 )
 
-TRIP_TYPE_CHOICES = (
+ACTIVITY_TYPE_CHOICES = (
     ("AM_BOAT", "AM_BOAT"),
     ("PM_BOAT", "PM_BOAT"),
     ("POOL", "POOL"),
@@ -47,16 +47,16 @@ class Note(models.Model):
         return f"Note(day={self.day},title={self.title},text={self.text}"
 
 
-class TripDetail(models.Model):
+class ActivityDetail(models.Model):
     day = models.ForeignKey(to=Day, on_delete=models.CASCADE)
-    trip_type = models.CharField(max_length=255, choices=TRIP_TYPE_CHOICES)
+    activity_type = models.CharField(max_length=255, choices=ACTIVITY_TYPE_CHOICES)
     time = models.CharField(max_length=255, null=True, blank=True)
     dive_site_1 = models.CharField(max_length=255, null=True, blank=True)
     dive_site_2 = models.CharField(max_length=255, null=True, blank=True)
     dive_guides = models.ManyToManyField(to=User)
 
     def __repr__(self):
-        return f"TripDetail(day={self.day.date})"
+        return f"ActivityDetail(day={self.day.date})"
 
     def __str__(self):
-        return f"TripDetail(day={self.day.date}, trip_type={self.trip_type})"
+        return f"ActivityDetail(day={self.day.date}, trip_type={self.trip_type})"

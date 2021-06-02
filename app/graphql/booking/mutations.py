@@ -8,7 +8,7 @@ from graphql_jwt.decorators import staff_member_required
 from django.contrib.auth import get_user_model
 
 from ...users.models import Profile
-from ...schedule.models import Booking, Day, TripDetail
+from ...schedule.models import Booking, Day, ActivityDetail
 
 User = get_user_model()
 
@@ -21,34 +21,34 @@ class CreateBooking(graphene.Mutation):
         instructor_id = graphene.ID(required=False)
         date = graphene.Date(required=True)
         time = graphene.String(required=False)
-        trip_type = graphene.String(required=True)
-        activity = graphene.String(required=True)
+        activity_type = graphene.String(required=True)
+        diver_role = graphene.String(required=True)
         equipment = graphene.String(required=False)
 
     @staff_member_required
     def mutate(
-        self, info, user_id, date, time, trip_type, activity, equipment, **kwargs
+        self, info, user_id, date, time, activity_type, diver_role, equipment, **kwargs
     ):
         instructor_id = kwargs.get("instructor_id")
         viewer = get_viewer(info)
         diver = User.objects.get(pk=user_id)
 
         day, created = Day.objects.get_or_create(date=date)
-        trip_detail, created = TripDetail.objects.get_or_create(
-            day=day, trip_type=trip_type
+        activity_detail, created = ActivityDetail.objects.get_or_create(
+            day=day, activity_type=activity_type
         )
 
         if not time:
-            if trip_type == "AM_BOAT":
-                trip_detail.time = "9AM"
-            if trip_type == "PM_BOAT":
-                trip_detail.time = "1:30PM"
+            if activity_type == "AM_BOAT":
+                activity_detail.time = "9AM"
+            if activity_type == "PM_BOAT":
+                activity_detail.time = "1:30PM"
 
         booking = Booking(
             time=time,
-            trip_detail=trip_detail,
+            activity_detail=activity_detail,
             diver=diver,
-            activity=activity,
+            diver_role=diver_role,
             equipment=equipment,
             booked_by=viewer,
         )
@@ -59,7 +59,7 @@ class CreateBooking(graphene.Mutation):
         except ObjectDoesNotExist:
             pass
 
-        trip_detail.save()
+        activity_detail.save()
         day.save()
         booking.save()
 
@@ -74,9 +74,9 @@ class EditBooking(graphene.Mutation):
         instructor_id = graphene.ID(required=False)
         date = graphene.Date()
         time = graphene.String()
-        trip_type = graphene.String()
+        activity_type = graphene.String()
         full_name = graphene.String()
-        activity = graphene.String()
+        diver_role = graphene.String()
         equipment = graphene.String()
 
     @staff_member_required
@@ -84,9 +84,9 @@ class EditBooking(graphene.Mutation):
         date = kwargs.get("date")
         time = kwargs.get("time")
         instructor_id = kwargs.get("instructor_id")
-        trip_type = kwargs.get("trip_type")
+        activity_type = kwargs.get("activity_type")
         full_name = kwargs.get("full_name")
-        activity = kwargs.get("activity")
+        diver_role = kwargs.get("diver_role")
         equipment = kwargs.get("equipment")
 
         booking = Booking.objects.get(pk=id)
@@ -100,12 +100,12 @@ class EditBooking(graphene.Mutation):
             booking.date = date
         if time:
             booking.time = time
-        if trip_type:
-            booking.trip_type = trip_type
+        if activity_type:
+            booking.activity_type = activity_type
         if full_name:
             booking.diver.profile.full_name = diver
-        if activity:
-            booking.activity = activity
+        if diver_role:
+            booking.diver_role = diver_role
         if equipment:
             booking.equipment = equipment
 

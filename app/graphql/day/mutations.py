@@ -2,7 +2,7 @@ import graphene
 from django.contrib.auth import get_user_model
 from graphql_jwt.decorators import staff_member_required
 
-from ...schedule.models import Day, Note, TripDetail
+from ...schedule.models import Day, Note, ActivityDetail
 from .types import NoteType, DayType, TripDetailType
 from ..utils import staff_permission_required
 
@@ -24,7 +24,7 @@ class CreateDay(graphene.Mutation):
 
 
 class CreateTripDetail(graphene.Mutation):
-    trip_detail = graphene.Field(TripDetailType)
+    activity_detail = graphene.Field(TripDetailType)
 
     class Arguments:
         date = graphene.Date()
@@ -40,28 +40,28 @@ class CreateTripDetail(graphene.Mutation):
         dive_site_1 = kwargs.get("dive_site_1")
         dive_site_2 = kwargs.get("dive_site_2")
         dive_guides = kwargs.get("dive_guides")
-        trip_detail = TripDetail(day=day, trip_type=trip_type)
-        trip_detail.save()
+        activity_detail = ActivityDetail(day=day, trip_type=trip_type)
+        activity_detail.save()
 
         if time:
-            trip_detail.time = time
+            activity_detail.time = time
         if dive_site_1 != "":
-            trip_detail.dive_site_1 = dive_site_1
+            activity_detail.dive_site_1 = dive_site_1
         if dive_site_2 != "":
-            trip_detail.dive_site_2 = dive_site_2
+            activity_detail.dive_site_2 = dive_site_2
 
         if len(dive_guides) != 0:
             for id in dive_guides:
                 guide = User.objects.get(pk=id)
-                trip_detail.dive_guides.add(guide)
+                activity_detail.dive_guides.add(guide)
 
-        trip_detail.save()
+        activity_detail.save()
 
-        return CreateTripDetail(trip_detail)
+        return CreateTripDetail(activity_detail)
 
 
 class EditTripDetail(graphene.Mutation):
-    trip_detail = graphene.Field(TripDetailType)
+    activity_detail = graphene.Field(TripDetailType)
 
     class Arguments:
         id = graphene.ID()
@@ -70,27 +70,27 @@ class EditTripDetail(graphene.Mutation):
         dive_guides = graphene.List(graphene.ID, required=False)
 
     def mutate(self, info, id, **kwargs):
-        trip_detail = TripDetail.objects.get(pk=id)
+        activity_detail = ActivityDetail.objects.get(pk=id)
 
         dive_guides = kwargs.get("dive_guides")
         dive_site_1 = kwargs.get("dive_site_1")
         dive_site_2 = kwargs.get("dive_site_2")
 
         if dive_site_1:
-            trip_detail.dive_site_1 = dive_site_1
+            activity_detail.dive_site_1 = dive_site_1
         if dive_site_2:
-            trip_detail.dive_site_2 = dive_site_2
+            activity_detail.dive_site_2 = dive_site_2
 
-        trip_detail.dive_guides.clear()
+        activity_detail.dive_guides.clear()
 
         if len(dive_guides) != 0:
             for id in dive_guides:
                 guide = User.objects.get(pk=id)
-                trip_detail.dive_guides.add(guide)
+                activity_detail.dive_guides.add(guide)
 
-        trip_detail.save()
+        activity_detail.save()
 
-        return EditTripDetail(trip_detail)
+        return EditTripDetail(activity_detail)
 
 
 class CreateNote(graphene.Mutation):
