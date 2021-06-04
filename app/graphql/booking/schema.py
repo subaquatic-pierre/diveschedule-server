@@ -5,7 +5,7 @@ from graphql_jwt.decorators import staff_member_required
 
 
 from .types import BookingType
-from .mutations import CreateBooking, EditBooking, DeleteBooking
+from .mutations import CreateBooking, EditBooking, DeleteBookings
 from ..utils import staff_permission_required
 from ...schedule.models import Booking
 
@@ -37,4 +37,4 @@ class BookingQueries(graphene.ObjectType):
 class BookingMutations(graphene.ObjectType):
     create_booking = CreateBooking.Field()
     edit_booking = EditBooking.Field()
-    delete_booking = DeleteBooking.Field()
+    delete_bookings = DeleteBookings.Field()

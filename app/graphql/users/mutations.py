@@ -64,7 +64,6 @@ class CreateUser(graphene.Mutation):
 
     @staff_member_required
     def mutate(self, info, **kwargs):
-
         # User model fields
         password = kwargs.get("password", "password")
         email = kwargs.get("email")
@@ -129,9 +128,13 @@ class UpdateProfile(graphene.Mutation):
 
         profile.full_name = full_name
         profile.email = email
-        profile.equipment = equipment
-        profile.cert_level = cert_level
-        profile.phone_number = phone_number
+
+        if equipment:
+            profile.equipment = equipment
+        if cert_level:
+            profile.cert_level = cert_level
+        if phone_number:
+            profile.phone_number = phone_number
 
         user.save()
         profile.save()
@@ -150,7 +153,6 @@ class DeleteUsers(graphene.Mutation):
     def mutate(self, info, ids):
         for id in ids:
             user = User.objects.get(id=id)
-
             if not user:
                 raise Exception("No user found")
 

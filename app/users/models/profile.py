@@ -23,9 +23,7 @@ EQUIPMENT_CHOICES = [
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
-    full_name = models.CharField(
-        max_length=256, default="Default Name", null=True, blank=True
-    )
+    full_name = models.CharField(max_length=256, null=True, blank=True)
 
     email = models.EmailField(max_length=255, blank=True, null=True)
 

@@ -114,7 +114,7 @@ class EditBooking(graphene.Mutation):
         return EditBooking(booking=booking)
 
 
-class DeleteBooking(graphene.Mutation):
+class DeleteBookings(graphene.Mutation):
     bookings = graphene.List(BookingType)
 
     class Arguments:
@@ -128,4 +128,4 @@ class DeleteBooking(graphene.Mutation):
             booking_list.append(copy(booking))
             booking.delete()
 
-        return DeleteBooking(bookings=booking_list)
+        return DeleteBookings(bookings=booking_list)

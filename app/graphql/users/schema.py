@@ -3,7 +3,8 @@ import graphql_jwt
 from graphene import relay
 from graphene_django import DjangoConnectionField
 from django.contrib.auth import get_user_model
-from graphql_jwt.decorators import staff_member_required
+from django.contrib.auth.models import AnonymousUser
+from graphql_jwt.decorators import context, staff_member_required
 
 from ...users.models import Profile
 from .types import UserType, UserConnection, ProfileType
@@ -28,6 +29,11 @@ class UserQueries(graphene.ObjectType):
     user_profile = graphene.Field(ProfileType, user_id=graphene.ID())
 
     def resolve_user_profile(self, info, user_id):
+        if user_id == "-1":
+            user = AnonymousUser()
+            profile = Profile(user)
+            return profile
+
         user = User.objects.get(pk=user_id)
         profile = user.profile
         return profile
