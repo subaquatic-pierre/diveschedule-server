@@ -59,4 +59,4 @@ class ActivityDetail(models.Model):
         return f"ActivityDetail(day={self.day.date})"
 
     def __str__(self):
-        return f"ActivityDetail(day={self.day.date}, trip_type={self.trip_type})"
+        return f"ActivityDetail(day={self.day.date}, activity_type={self.activity_type}, dive_site1={self.dive_site_1},dive_site2={self.dive_site_2})"

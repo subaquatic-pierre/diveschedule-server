@@ -1,3 +1,4 @@
+from app.schedule.models.daily_details import ActivityDetail
 import graphene
 import graphql_jwt
 from graphene import relay
@@ -5,13 +6,13 @@ from django.contrib.auth import get_user_model
 from ...schedule.models import Day, Note
 from graphql_jwt.decorators import staff_member_required
 
-from .types import AnonDayType, NoteType, DayUnion, TripDetailType
+from .types import AnonDayType, NoteType, DayUnion, ActivityDetailType
 from .mutations import (
     CreateDay,
     CreateNote,
-    CreateTripDetail,
+    CreateActivityDetail,
     EditNote,
-    EditTripDetail,
+    EditActivityDetail,
     DeleteNote,
 )
 from ..utils import get_viewer
@@ -23,7 +24,8 @@ User = get_user_model()
 class DayQueries(graphene.ObjectType):
     day = graphene.Field(DayUnion, date=graphene.Date())
     notes = graphene.List(NoteType, date=graphene.Date())
-    daily_activity_meta = graphene.List(TripDetailType, date=graphene.Date())
+    daily_activity_meta = graphene.List(ActivityDetailType, date=graphene.Date())
+    activity_data = graphene.Field(ActivityDetailType, activity_id=graphene.ID())
 
     def resolve_day(self, info, date):
         try:
@@ -41,15 +43,24 @@ class DayQueries(graphene.ObjectType):
             return []
 
     def resolve_daily_activity_meta(self, info, date):
-        day = Day.objects.get(date=date)
-        print(day)
-        return []
+        try:
+            day = Day.objects.get(date=date)
+            print(day)
+            activities = ActivityDetail.objects.filter(day=day)
+            print(activities)
+            return activities
+        except:
+            return []
+
+    def resolve_activity_data(self, info, activity_id):
+        activity = ActivityDetail.objects.get(pk=activity_id)
+        return activity
 
 
 class DayMutations(graphene.ObjectType):
     create_day = CreateDay.Field()
     create_note = CreateNote.Field()
-    create_trip_detail = CreateTripDetail.Field()
+    edit_activity_detail = EditActivityDetail.Field()
+    create_activity_detail = CreateActivityDetail.Field()
     edit_note = EditNote.Field()
-    edit_trip_detail = EditTripDetail.Field()
     delete_note = DeleteNote.Field()

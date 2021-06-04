@@ -1,3 +1,4 @@
+from app.schedule.models.daily_details import ActivityDetail
 import graphene
 from django.contrib.auth import get_user_model
 from graphql_jwt.decorators import staff_member_required
@@ -16,14 +17,14 @@ class BookingQueries(graphene.ObjectType):
         BookingType, id=graphene.ID(), description="Get a single booking"
     )
 
-    bookings = graphene.List(
+    daily_bookings = graphene.List(
         BookingType,
         date=graphene.String(required=True),
         description="Get a list of bookings from a list of given ids, date or userId",
     )
 
     # @staff_member_required
-    def resolve_bookings(self, info, date):
+    def resolve_daily_bookings(self, info, date):
         return Booking.objects.filter(date=date)
 
     @staff_member_required

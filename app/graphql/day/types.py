@@ -9,7 +9,7 @@ class DayType(DjangoObjectType):
         model = Day
 
 
-class TripDetailType(DjangoObjectType):
+class ActivityDetailType(DjangoObjectType):
     class Meta:
         model = ActivityDetail
 

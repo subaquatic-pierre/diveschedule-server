@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from graphql_jwt.decorators import staff_member_required
 
 from ...schedule.models import Day, Note, ActivityDetail
-from .types import NoteType, DayType, TripDetailType
+from .types import NoteType, DayType, ActivityDetailType
 from ..utils import staff_permission_required
 
 
@@ -23,24 +23,27 @@ class CreateDay(graphene.Mutation):
         return CreateDay(day)
 
 
-class CreateTripDetail(graphene.Mutation):
-    activity_detail = graphene.Field(TripDetailType)
+class CreateActivityDetail(graphene.Mutation):
+    activity_detail = graphene.Field(ActivityDetailType)
 
     class Arguments:
         date = graphene.Date()
-        trip_type = graphene.String()
+        activity_type = graphene.String()
         time = graphene.String(required=False)
         dive_site_1 = graphene.String(required=False)
         dive_site_2 = graphene.String(required=False)
         dive_guides = graphene.List(graphene.ID, required=False)
 
-    def mutate(self, info, date, trip_type, **kwargs):
+    def mutate(self, info, **kwargs):
+        date = kwargs.get("date")
         day, created = Day.objects.get_or_create(date=date)
+        print(created)
         time = kwargs.get("time")
         dive_site_1 = kwargs.get("dive_site_1")
         dive_site_2 = kwargs.get("dive_site_2")
         dive_guides = kwargs.get("dive_guides")
-        activity_detail = ActivityDetail(day=day, trip_type=trip_type)
+        activity_type = kwargs.get("activity_type")
+        activity_detail = ActivityDetail(day=day, activity_type=activity_type)
         activity_detail.save()
 
         if time:
@@ -55,13 +58,14 @@ class CreateTripDetail(graphene.Mutation):
                 guide = User.objects.get(pk=id)
                 activity_detail.dive_guides.add(guide)
 
+        day.save()
         activity_detail.save()
 
-        return CreateTripDetail(activity_detail)
+        return CreateActivityDetail(activity_detail)
 
 
-class EditTripDetail(graphene.Mutation):
-    activity_detail = graphene.Field(TripDetailType)
+class EditActivityDetail(graphene.Mutation):
+    activity_detail = graphene.Field(ActivityDetailType)
 
     class Arguments:
         id = graphene.ID()
@@ -90,7 +94,7 @@ class EditTripDetail(graphene.Mutation):
 
         activity_detail.save()
 
-        return EditTripDetail(activity_detail)
+        return EditActivityDetail(activity_detail)
 
 
 class CreateNote(graphene.Mutation):

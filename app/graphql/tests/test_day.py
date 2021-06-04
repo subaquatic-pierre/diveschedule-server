@@ -62,7 +62,7 @@ class TestDay(GraphQLTestCase):
                 }
             }   
 
-            fragment TripDetailFragment on TripDetailType {
+            fragment TripDetailFragment on ActivityDetailType {
                 activityType
                 diveSite1
                 diveSite2
