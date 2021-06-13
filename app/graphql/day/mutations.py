@@ -37,7 +37,6 @@ class CreateActivityDetail(graphene.Mutation):
     def mutate(self, info, **kwargs):
         date = kwargs.get("date")
         day, created = Day.objects.get_or_create(date=date)
-        print(created)
         time = kwargs.get("time")
         dive_site_1 = kwargs.get("dive_site_1")
         dive_site_2 = kwargs.get("dive_site_2")
