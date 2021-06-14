@@ -45,9 +45,7 @@ class DayQueries(graphene.ObjectType):
     def resolve_daily_activity_meta(self, info, date):
         try:
             day = Day.objects.get(date=date)
-            print(day)
             activities = ActivityDetail.objects.filter(day=day)
-            print(activities)
             return activities
         except:
             return []
