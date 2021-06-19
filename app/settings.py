@@ -10,7 +10,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG", default=True)
 
-APPEND_SLASH = False
 CSRF_COOKIE_NAME = "csrftoken"
 WSGI_APPLICATION = "app.wsgi.application"
 ROOT_URLCONF = "app.urls"
