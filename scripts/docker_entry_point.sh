@@ -10,4 +10,4 @@ python manage.py migrate
 python3 manage.py loaddata users profiles days bookings
 echo "Django is ready.";
 
-python manage.py runserver 0.0.0.0:8000
+uwsgi --ini ../app/wsgi/uwsgi.ini

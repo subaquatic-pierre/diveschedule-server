@@ -18,10 +18,6 @@ RUN apt-get -y update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
-COPY ./requirements.txt /app/
-RUN pip install -r /app/requirements.txt
-
 # ------
 # Set build args
 # ------
@@ -65,8 +61,8 @@ ENV DB_ENGINE=$DB_ENGINE
 ENV CORS_ALLOW_ALL_ORIGINS=$CORS_ALLOW_ALL_ORIGINS
 # ------
 
-COPY . /app/
+COPY . /app
 WORKDIR /app
+RUN pip3 install -r requirements.txt
 
-RUN chmod +x ./scripts/docker_entry_point.sh
 CMD [ "./scripts/docker_entry_point.sh" ]
