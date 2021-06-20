@@ -69,7 +69,4 @@ COPY . /app
 WORKDIR /app
 RUN pip3 install -r requirements.txt
 
-RUN ln -sf /dev/stdout /var/log/api/access.log \
-    && ln -sf /dev/stderr /var/log/api/error.log
-
 CMD [ "./scripts/docker_entry_point.sh" ]
