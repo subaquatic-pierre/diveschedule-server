@@ -1,0 +1,13 @@
+[
+  {
+    "model": "users.profile",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "cert_level": "OW",
+      "equipment": "FK",
+      "email": "info@divesandybeach.com",
+      "full_name": "Admin"
+    }
+  }
+]

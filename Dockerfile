@@ -22,6 +22,8 @@ RUN apt-get -y update \
 # Set build args
 # ------
 ARG DB_NAME
+ARG DJANGO_SUPERUSER_PASSWORD
+ARG DJANGO_SUPERUSER_EMAIL
 ARG DB_USER
 ARG DB_PASSWORD
 ARG DB_HOST
@@ -44,6 +46,8 @@ ARG SECRET_KEY
 # ------
 # ARG COOL
 ENV DB_NAME=$DB_NAME
+ENV DJANGO_SUPERUSER_PASSWORD=$DJANGO_SUPERUSER_PASSWORD
+ENV DJANGO_SUPERUSER_EMAIL=$DJANGO_SUPERUSER_EMAIL
 ENV DB_USER=$DB_USER
 ENV DB_PASSWORD=$DB_PASSWORD
 ENV DB_HOST=$DB_HOST
@@ -64,5 +68,8 @@ ENV CORS_ALLOW_ALL_ORIGINS=$CORS_ALLOW_ALL_ORIGINS
 COPY . /app
 WORKDIR /app
 RUN pip3 install -r requirements.txt
+
+RUN ln -sf /dev/stdout /var/log/api/access.log \
+    && ln -sf /dev/stderr /var/log/api/error.log
 
 CMD [ "./scripts/docker_entry_point.sh" ]

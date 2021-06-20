@@ -5,6 +5,7 @@ __pycache__/
 
 *.env
 db.sqlite
+static
 
 # C extensions
 *.so
